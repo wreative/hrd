@@ -130,7 +130,7 @@
                 <div class="card-body">
                     <div class="form-group">
                         <label>{{ __('Karyawan') }}<code>*</code></label>
-                        <select class="custom-select select2 @error('karyawan') is-invalid @enderror" name="karyawan">
+                        <select class="form-control select2 @error('karyawan') is-invalid @enderror" name="karyawan">
                             @foreach ($karyawan as $k)
                             <option value="{{ $k->id }}">
                                 {{ $k->nama." - ".$k->relationDetailed->jabatan." ".$k->relationDetailed->divisi }}
