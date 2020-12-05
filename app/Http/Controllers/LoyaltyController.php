@@ -40,17 +40,17 @@ class LoyaltyController extends Controller
     public function store(Request $req)
     {
         $this->validate($req, [
-            'absen' => 'required|max:20',
-            'waktu' => 'required|max:10',
-            'uniform' => 'required|max:5',
-            'sop' => 'required|max:30',
-            'tj' => 'required|max:25',
-            'kt' => 'required|max:10',
+            'absen' => 'required|max:20|numeric|min:0',
+            'waktu' => 'required|max:10|numeric|min:0',
+            'uniform' => 'required|max:5|numeric|min:0',
+            'sop' => 'required|max:30|numeric|min:0',
+            'tj' => 'required|max:25|numeric|min:0',
+            'kt' => 'required|max:10|numeric|min:0',
             'rank' => 'required',
             'karyawan' => 'required',
-            'amanah' => 'required|max:40',
-            'produktif' => 'required|max:35',
-            'tw' => 'required|max:25',
+            'amanah' => 'required|max:40|numeric|min:0',
+            'produktif' => 'required|max:35|numeric|min:0',
+            'tw' => 'required|max:25|numeric|min:0',
         ]);
 
         $rank = $req->rank == '1' ? 200000 : ($req->rank == '2' ? 100000 : 0);
@@ -59,13 +59,6 @@ class LoyaltyController extends Controller
         // Calculate
         $loyalitas = $req->absen + $req->waktu + $req->uniform + $req->sop + $req->tj + $req->kt;
         $dedikasi = $req->amanah + $req->produktif + $req->tw;
-
-        // Store Data
-        // Loyalty::create([
-        //     'loyalitas' => $rank * $loyalitas / 100,
-        //     'dedikasi' => $rank * $dedikasi / 100,
-        //     'tanggal' => $req->tgl,
-        // ]);
 
         $karyawan->loyalitas = $rank * $loyalitas / 100;
         $karyawan->dedikasi = $rank * $dedikasi / 100;
