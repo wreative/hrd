@@ -8,7 +8,6 @@ use App\Models\Salary;
 use App\Models\SalaryPlus;
 use App\Models\SalaryMinus;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
 
 class SalaryController extends Controller
 {
@@ -33,7 +32,6 @@ class SalaryController extends Controller
         $salary = DB::table('salary')
             ->join('salary_plus', 'salary.plus_id', '=', 'salary_plus.id_plus')
             ->join('employees', 'salary.e_id', '=', 'employees.id')
-            // ->join('contract', 'employees.id', '=', 'contract.id')
             ->select(
                 'employees.kode',
                 'employees.nama',
@@ -96,18 +94,6 @@ class SalaryController extends Controller
         if ($karyawan->loyalitas || $karyawan->dedikasi == null) {
             view('pages.master.gaji.createGaji', ['status' => 'Karyawan & Dedikasi Tidak Boleh Kosong, Tambah Terlebih Dahulu!']);
         }
-
-        // Remove Comma        
-        // $loyalitas = str_replace(',', '', $req->loyalitas);
-        // $dedikasi = str_replace(',', '', $req->dedikasi);
-        // $kasbonAdmin = str_replace(',', '', $req->ka);
-        // $iuranKesehatan = str_replace(',', '', $req->ik);
-        // $tabunganKoperasi = str_replace(',', '', $req->tk);
-        // $termin1 = str_replace(',', '', $req->t1);
-        // $termin2 = str_replace(',', '', $req->t2);
-        // $termin3 = str_replace(',', '', $req->t3);
-        // $termin4 = str_replace(',', '', $req->t4);
-        // $angsuranKoperasi = str_replace(',', '', $req->ak);
 
         // Const
         $gajiHarian = $karyawan->relationContract->gaji / 25;
