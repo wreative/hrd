@@ -21,7 +21,7 @@
                         <label>{{ __('Absen') }}<code>*</code></label>
                         <div class="input-group">
                             <input class="form-control @error('absen') is-invalid @enderror" type="number" id="absen"
-                                name="absen" required placeholder="Maksimal 20" max="20" autofocus>
+                                name="absen" placeholder="Maksimal 20" max="20" autofocus>
                             <div class="input-group-prepend">
                                 <div class="input-group-text">
                                     {{ __('%') }}
@@ -38,7 +38,7 @@
                         <label>{{ __('Waktu') }}<code>*</code></label>
                         <div class="input-group">
                             <input class="form-control @error('waktu') is-invalid @enderror" id="waktu" type="number"
-                                name="waktu" required placeholder="Maksimal 10" max="10">
+                                name="waktu" placeholder="Maksimal 10" max="10">
                             <div class="input-group-prepend">
                                 <div class="input-group-text">
                                     {{ __('%') }}
@@ -55,7 +55,7 @@
                         <label>{{ __('Uniform') }}<code>*</code></label>
                         <div class="input-group">
                             <input class="form-control @error('uniform') is-invalid @enderror" id="uniform"
-                                type="number" name="uniform" required placeholder="Maksimal 5" max="5">
+                                type="number" name="uniform" placeholder="Maksimal 5" max="5">
                             <div class="input-group-prepend">
                                 <div class="input-group-text">
                                     {{ __('%') }}
@@ -72,7 +72,7 @@
                         <label>{{ __('SOP') }}<code>*</code></label>
                         <div class="input-group">
                             <input class="form-control @error('sop') is-invalid @enderror" id="sop" type="number"
-                                name="sop" required placeholder="Maksimal 30" max="30">
+                                name="sop" placeholder="Maksimal 30" max="30">
                             <div class="input-group-prepend">
                                 <div class="input-group-text">
                                     {{ __('%') }}
@@ -89,7 +89,7 @@
                         <label>{{ __('Tanggung Jawab') }}<code>*</code></label>
                         <div class="input-group">
                             <input class="form-control @error('tj') is-invalid @enderror" id="tj" type="number"
-                                name="tj" required placeholder="Maksimal 25" max="25">
+                                name="tj" placeholder="Maksimal 25" max="25">
                             <div class="input-group-prepend">
                                 <div class="input-group-text">
                                     {{ __('%') }}
@@ -106,7 +106,7 @@
                         <label>{{ __('Kerja Team') }}<code>*</code></label>
                         <div class="input-group">
                             <input class="form-control @error('kt') is-invalid @enderror" id="kt" type="number"
-                                name="kt" required placeholder="Maksimal 10" max="10">
+                                name="kt" placeholder="Maksimal 10" max="10">
                             <div class="input-group-prepend">
                                 <div class="input-group-text">
                                     {{ __('%') }}
@@ -167,7 +167,7 @@
                         <label>{{ __('Amanah') }}<code>*</code></label>
                         <div class="input-group">
                             <input class="form-control @error('amanah') is-invalid @enderror" type="number" id="amanah"
-                                name="amanah" required placeholder="Maksimal 40" max="40">
+                                name="amanah" placeholder="Maksimal 40" max="40">
                             <div class="input-group-prepend">
                                 <div class="input-group-text">
                                     {{ __('%') }}
@@ -184,7 +184,7 @@
                         <label>{{ __('Produktif') }}<code>*</code></label>
                         <div class="input-group">
                             <input class="form-control @error('produktif') is-invalid @enderror" id="produktif"
-                                type="number" name="produktif" required placeholder="Maksimal 35" max="35">
+                                type="number" name="produktif" placeholder="Maksimal 35" max="35">
                             <div class="input-group-prepend">
                                 <div class="input-group-text">
                                     {{ __('%') }}
@@ -201,7 +201,7 @@
                         <label>{{ __('Team Work') }}<code>*</code></label>
                         <div class="input-group">
                             <input class="form-control @error('tw') is-invalid @enderror" id="tw" type="number"
-                                name="tw" required placeholder="Maksimal 25" max="25">
+                                name="tw" placeholder="Maksimal 25" max="25">
                             <div class="input-group-prepend">
                                 <div class="input-group-text">
                                     {{ __('%') }}

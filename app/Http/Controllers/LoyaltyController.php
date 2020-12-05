@@ -40,17 +40,17 @@ class LoyaltyController extends Controller
     public function store(Request $req)
     {
         $this->validate($req, [
-            'absen' => 'required|max:20|numeric|min:0',
-            'waktu' => 'required|max:10|numeric|min:0',
-            'uniform' => 'required|max:5|numeric|min:0',
-            'sop' => 'required|max:30|numeric|min:0',
-            'tj' => 'required|max:25|numeric|min:0',
-            'kt' => 'required|max:10|numeric|min:0',
+            'absen' => 'exclude_if:rank,3|required|max:20|numeric|min:0',
+            'waktu' => 'exclude_if:rank,3|required|max:10|numeric|min:0',
+            'uniform' => 'exclude_if:rank,3|required|max:5|numeric|min:0',
+            'sop' => 'exclude_if:rank,3|required|max:30|numeric|min:0',
+            'tj' => 'exclude_if:rank,3|required|max:25|numeric|min:0',
+            'kt' => 'exclude_if:rank,3|required|max:10|numeric|min:0',
             'rank' => 'required',
             'karyawan' => 'required',
-            'amanah' => 'required|max:40|numeric|min:0',
-            'produktif' => 'required|max:35|numeric|min:0',
-            'tw' => 'required|max:25|numeric|min:0',
+            'amanah' => 'exclude_if:rank,3|required|max:40|numeric|min:0',
+            'produktif' => 'exclude_if:rank,3|required|max:35|numeric|min:0',
+            'tw' => 'exclude_if:rank,3|required|max:25|numeric|min:0',
         ]);
 
         $rank = $req->rank == '1' ? 200000 : ($req->rank == '2' ? 100000 : 0);
