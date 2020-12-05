@@ -56,7 +56,7 @@
             <div class="form-group">
                 <label>{{ __('Jumlah Hari Karyawan Aktif') }}<code>*</code></label>
                 <div class="input-group">
-                    <input class="form-control @error('aktif') is-invalid @enderror" type="number" max="26"
+                    <input class="form-control @error('aktif') is-invalid @enderror" type="text"
                         placeholder="Maksimal Hari Masuk 26" name="aktif" required autofocus>
                     <div class="input-group-prepend">
                         <div class="input-group-text">
@@ -94,7 +94,7 @@
                     <div class="form-group">
                         <label>{{ __('Lembur Per Menit') }} </label>
                         <div class="input-group">
-                            <input class="form-control @error('menit') is-invalid @enderror" value="0" type="number"
+                            <input class="form-control @error('menit') is-invalid @enderror" value="0" type="text"
                                 name="menit" required>
                             <div class="input-group-prepend">
                                 <div class="input-group-text">
@@ -111,7 +111,7 @@
                     <div class="form-group">
                         <label>{{ __('Lembur Per Hari') }} </label>
                         <div class="input-group">
-                            <input class="form-control @error('hari') is-invalid @enderror" value="0" type="number"
+                            <input class="form-control @error('hari') is-invalid @enderror" value="0" type="text"
                                 name="hari" required>
                             <div class="input-group-prepend">
                                 <div class="input-group-text">
@@ -128,7 +128,7 @@
                     <div class="form-group">
                         <label>{{ __('Lembur Libur Per Hari') }} </label>
                         <div class="input-group">
-                            <input class="form-control @error('llhari') is-invalid @enderror" value="0" type="number"
+                            <input class="form-control @error('llhari') is-invalid @enderror" value="0" type="text"
                                 name="llhari" required>
                             <div class="input-group-prepend">
                                 <div class="input-group-text">
@@ -145,7 +145,7 @@
                     <div class="form-group">
                         <label>{{ __('Lembur Proyek Per Menit') }} </label>
                         <div class="input-group">
-                            <input class="form-control @error('lpmenit') is-invalid @enderror" value="0" type="number"
+                            <input class="form-control @error('lpmenit') is-invalid @enderror" value="0" type="text"
                                 name="lpmenit" required>
                             <div class="input-group-prepend">
                                 <div class="input-group-text">
@@ -162,7 +162,7 @@
                     <div class="form-group">
                         <label>{{ __('Lembur Proyek Per Hari') }} </label>
                         <div class="input-group">
-                            <input class="form-control @error('lphari') is-invalid @enderror" value="0" type="number"
+                            <input class="form-control @error('lphari') is-invalid @enderror" value="0" type="text"
                                 name="lphari" required>
                             <div class="input-group-prepend">
                                 <div class="input-group-text">
@@ -179,7 +179,7 @@
                     <div class="form-group">
                         <label>{{ __('Hadir Luar Kota atau Pulau') }} </label>
                         <div class="input-group">
-                            <input class="form-control @error('hlkp') is-invalid @enderror" value="0" type="number"
+                            <input class="form-control @error('hlkp') is-invalid @enderror" value="0" type="text"
                                 name="hlkp" required>
                             <div class="input-group-prepend">
                                 <div class="input-group-text">
@@ -196,7 +196,7 @@
                     <div class="form-group">
                         <label>{{ __('Lembur Luar Kota atau Pulau Per Menit') }} </label>
                         <div class="input-group">
-                            <input class="form-control @error('llkpmenit') is-invalid @enderror" value="0" type="number"
+                            <input class="form-control @error('llkpmenit') is-invalid @enderror" value="0" type="text"
                                 name="llkpmenit" required>
                             <div class="input-group-prepend">
                                 <div class="input-group-text">
@@ -222,7 +222,7 @@
                     <div class="form-group">
                         <label>{{ __('Terlambat atau Pulang Cepat Per Menit') }}</label>
                         <div class="input-group">
-                            <input class="form-control @error('tpcm') is-invalid @enderror" value="0" type="number"
+                            <input class="form-control @error('tpcm') is-invalid @enderror" value="0" type="text"
                                 name="tpcm" required>
                             <div class="input-group-prepend">
                                 <div class="input-group-text">
@@ -239,7 +239,7 @@
                     <div class="form-group">
                         <label>{{ __('Tidak Hadir (A)') }}</label>
                         <div class="input-group">
-                            <input class="form-control @error('haria') is-invalid @enderror" value="0" type="number"
+                            <input class="form-control @error('haria') is-invalid @enderror" value="0" type="text"
                                 name="haria" required>
                             <div class="input-group-prepend">
                                 <div class="input-group-text">
@@ -256,7 +256,7 @@
                     <div class="form-group">
                         <label>{{ __('Tidak Hadir (S)') }}</label>
                         <div class="input-group">
-                            <input class="form-control @error('haris') is-invalid @enderror" value="0" type="number"
+                            <input class="form-control @error('haris') is-invalid @enderror" value="0" type="text"
                                 name="haris" required>
                             <div class="input-group-prepend">
                                 <div class="input-group-text">
@@ -273,7 +273,7 @@
                     <div class="form-group">
                         <label>{{ __('Tidak Hadir (I)') }}</label>
                         <div class="input-group">
-                            <input class="form-control @error('harii') is-invalid @enderror" value="0" type="number"
+                            <input class="form-control @error('harii') is-invalid @enderror" value="0" type="text"
                                 name="harii" required>
                             <div class="input-group-prepend">
                                 <div class="input-group-text">
@@ -290,7 +290,7 @@
                     <div class="form-group">
                         <label>{{ __('Tidak Hadir (B)') }}</label>
                         <div class="input-group">
-                            <input class="form-control @error('harib') is-invalid @enderror" value="0" type="number"
+                            <input class="form-control @error('harib') is-invalid @enderror" value="0" type="text"
                                 name="harib" required>
                             <div class="input-group-prepend">
                                 <div class="input-group-text">

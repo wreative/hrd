@@ -8,6 +8,7 @@ use App\Models\Salary;
 use App\Models\SalaryPlus;
 use App\Models\SalaryMinus;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class SalaryController extends Controller
 {
@@ -60,23 +61,23 @@ class SalaryController extends Controller
     public function store(Request $req)
     {
         $this->validate($req, [
-            'aktif' => 'required|max:26',
+            'aktif' => 'required|max:26|min:1|numeric',
             'karyawan' => 'required',
             'tgl' => 'required|date',
             // Penambahan
-            'menit' => 'required|min:0|integer',
-            'hari' => 'required|min:0|integer',
-            'llhari' => 'required|min:0|integer',
-            'lpmenit' => 'required|min:0|integer',
-            'lphari' => 'required|min:0|integer',
-            'hlkp' => 'required|min:0|integer',
-            'llkpmenit' => 'required|min:0|integer',
+            'menit' => 'required|min:0|numeric',
+            'hari' => 'required|min:0|numeric',
+            'llhari' => 'required|min:0|numeric',
+            'lpmenit' => 'required|min:0|numeric',
+            'lphari' => 'required|min:0|numeric',
+            'hlkp' => 'required|min:0|numeric',
+            'llkpmenit' => 'required|min:0|numeric',
             // Pengurangan
-            'tpcm' => 'required|min:0|integer',
-            'haria' => 'required|min:0|integer',
-            'haris' => 'required|min:0|integer',
-            'harii' => 'required|min:0|integer',
-            'harib' => 'required|min:0|integer',
+            'tpcm' => 'required|min:0|numeric',
+            'haria' => 'required|min:0|numeric',
+            'haris' => 'required|min:0|numeric',
+            'harii' => 'required|min:0|numeric',
+            'harib' => 'required|min:0|numeric',
             'ka' => 'required|min:0',
             'ik' => 'required|min:0',
             'tk' => 'required|min:0',
@@ -99,27 +100,27 @@ class SalaryController extends Controller
         // Remove Comma        
         // $loyalitas = str_replace(',', '', $req->loyalitas);
         // $dedikasi = str_replace(',', '', $req->dedikasi);
-        $kasbonAdmin = str_replace(',', '', $req->ka);
-        $iuranKesehatan = str_replace(',', '', $req->ik);
-        $tabunganKoperasi = str_replace(',', '', $req->tk);
-        $termin1 = str_replace(',', '', $req->t1);
-        $termin2 = str_replace(',', '', $req->t2);
-        $termin3 = str_replace(',', '', $req->t3);
-        $termin4 = str_replace(',', '', $req->t4);
-        $angsuranKoperasi = str_replace(',', '', $req->ak);
+        // $kasbonAdmin = str_replace(',', '', $req->ka);
+        // $iuranKesehatan = str_replace(',', '', $req->ik);
+        // $tabunganKoperasi = str_replace(',', '', $req->tk);
+        // $termin1 = str_replace(',', '', $req->t1);
+        // $termin2 = str_replace(',', '', $req->t2);
+        // $termin3 = str_replace(',', '', $req->t3);
+        // $termin4 = str_replace(',', '', $req->t4);
+        // $angsuranKoperasi = str_replace(',', '', $req->ak);
 
         // Const
         $gajiHarian = $karyawan->relationContract->gaji / 25;
-        $setengahGP = ($gajiHarian * 50) / 100;
-        $transportasi = (($setengahGP * 26.7) / 100);
-        $uangHadir = (($setengahGP * 73.333) / 100);
+        $setengahGP = round($gajiHarian * 50) / 100;
+        $transportasi = round(($setengahGP * 26.7) / 100);
+        $uangHadir = round(($setengahGP * 73.333) / 100);
 
         // Penambahan        
         $gajiPokok = ($gajiHarian * 50 / 100) * 25;
         $uHadir = round($uangHadir * $req->aktif);
         $transport = round($transportasi * $req->aktif);
-        $lmenit = round(($setengahGP / 300) * $req->menit);
-        $lhari = round($gajiHarian * $req->hari);
+        $lmenit = round(($gajiHarian / 300) * $req->menit);
+        $lhari = round($gajiHarian * $req->hari); //dsfds
         $llhari = round($gajiHarian * $req->llhari);
         $lpmenit = round(((1.25 * $gajiHarian) / 300) * $req->lpmenit);
         $lphari = round((1.25 * $gajiHarian) * $req->lphari);
@@ -130,11 +131,12 @@ class SalaryController extends Controller
         $tpcm = round(($gajiHarian / 240) * $req->tpcm);
         $tha = round(($gajiHarian * 1.25) * $req->haria);
         $ths = round(($uangHadir + $transportasi) * $req->haris);
+        // dd($transportasi . " " . $uangHadir . " " . $ths . " " . $req->haris);
         $thi = round(($uangHadir + $transportasi) * $req->harii);
         $thb = round($gajiHarian * $req->harib);
 
         // Total
-        $penerimaan = $gajiPokok +
+        $penerimaan = round($gajiPokok +
             $uHadir +
             $transport +
             $lmenit +
@@ -144,21 +146,21 @@ class SalaryController extends Controller
             $hlkp +
             $llkpmenit +
             $karyawan->loyalitas +
-            $karyawan->dedikasi;
-        $pengurangan = $tpcm +
+            $karyawan->dedikasi);
+        $pengurangan = round($tpcm +
             $tha +
             $ths +
             $thi +
             $thb +
-            $kasbonAdmin +
-            $iuranKesehatan +
-            $tabunganKoperasi +
-            $termin1 +
-            $termin2 +
-            $termin3 +
-            $termin4 +
-            $angsuranKoperasi;
-        $total = $penerimaan - $pengurangan;
+            $this->removeComma($req->ka) +
+            $this->removeComma($req->ik) +
+            $this->removeComma($req->tk) +
+            $this->removeComma($req->t1) +
+            $this->removeComma($req->t2) +
+            $this->removeComma($req->t3) +
+            $this->removeComma($req->t4) +
+            $this->removeComma($req->ak));
+        $total = round($penerimaan - $pengurangan);
 
         return redirect()->route('tempSalary')->with([
             'tgl' => $req->tgl,
@@ -182,14 +184,14 @@ class SalaryController extends Controller
             'ths' => $ths,
             'thi' => $thi,
             'thb' => $thb,
-            'ka' => $kasbonAdmin,
-            'ik' => $iuranKesehatan,
-            'tk' => $tabunganKoperasi,
-            't1' => $termin1,
-            't2' => $termin2,
-            't3' => $termin3,
-            't4' => $termin4,
-            'ak' => $angsuranKoperasi,
+            'ka' => $this->removeComma($req->ka),
+            'ik' => $this->removeComma($req->ik),
+            'tk' => $this->removeComma($req->tk),
+            't1' => $this->removeComma($req->t1),
+            't2' => $this->removeComma($req->t2),
+            't3' => $this->removeComma($req->t3),
+            't4' => $this->removeComma($req->t4),
+            'ak' => $this->removeComma($req->ak),
             // Total
             'pen' => $penerimaan,
             'pengur' => $pengurangan,
@@ -314,5 +316,10 @@ class SalaryController extends Controller
             'Desember'
         );
         return $bulan;
+    }
+
+    public function removeComma($number)
+    {
+        return str_replace(',', '', $number);
     }
 }
