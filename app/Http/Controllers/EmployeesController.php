@@ -70,7 +70,9 @@ class EmployeesController extends Controller
         if ($req->hasFile('foto')) {
             $imagePath = $req->file('foto');
             $fileName =  $req->nik . '.' . $imagePath->getClientOriginalExtension();
-            $imagePath->move(public_path('storage/photo'), $fileName);
+            // $imagePath->move(public_path('storage/photo'), $fileName);
+            // Storage::put('photo', $fileName);
+            Storage::disk('photo')->put($fileName, $imagePath);
         } else {
             $fileName = '';
         }
