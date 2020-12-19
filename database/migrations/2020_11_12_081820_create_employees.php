@@ -22,7 +22,7 @@ class CreateEmployees extends Migration
             $table->string('photo')->nullable();
             $table->enum('status', ['Aktif', 'Pasif', 'Pelamar', 'Pending', 'Cancel']);
             $table->string('keterangan')->nullable();
-            $table->string('rek');
+            $table->string('rek')->nullable();
             $table->string('detail');
             $table->string('kontrak');
             $table->integer('loyalitas')->nullable();

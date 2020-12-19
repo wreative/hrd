@@ -258,7 +258,7 @@
                 {{-- <input type="text" class="form-control @error('foto') is-invalid @enderror" name="foto" required> --}}
                 <div class="custom-file">
                     <input type="file" class="custom-file-input" name="foto"
-                        accept="image/png, image/jpeg, image/jpg, image/svg" value="{{ $karyawan->ktp }}" id="foto">
+                        accept="image/png, image/jpeg, image/jpg, image/svg" id="foto">
                     <label class="custom-file-label" for="foto" id="foto_label">{{ __('Pilih File') }}</label>
                 </div>
                 @error('foto')

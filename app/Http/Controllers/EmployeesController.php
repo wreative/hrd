@@ -59,8 +59,7 @@ class EmployeesController extends Controller
             'tlp' => 'required',
             'foto' => 'image|mimes:jpeg,png,jpg,svg|max:2000',
             'status' => 'required',
-            'lb' => 'required',
-            'rek' => 'required',
+            // 'lb' => 'required',
         ]);
 
         if ($req->gaji == "0") {
@@ -70,12 +69,18 @@ class EmployeesController extends Controller
         if ($req->hasFile('foto')) {
             $imagePath = $req->file('foto');
             $fileName =  $req->nik . '.' . $imagePath->getClientOriginalExtension();
-            // $imagePath->move(public_path('storage/photo'), $fileName);
-            // Storage::put('photo', $fileName);
-            Storage::disk('photo')->put($fileName, $imagePath);
+            $imagePath->move(public_path('storage/photo'), $fileName);
         } else {
             $fileName = '';
         }
+
+        // Long Works as day
+        $date1 = strtotime($req->masuk);
+        $date2 = strtotime($req->kontrak);
+        $hasil = $date2 - $date1;
+        print(round(abs($hasil / 86400)));
+        dd(round(abs($hasil / 86400)));
+
 
         $gaji = str_replace(',', '', $req->gaji);
 
@@ -162,7 +167,6 @@ class EmployeesController extends Controller
             'foto' => 'image|mimes:jpeg,png,jpg,svg|max:2000',
             'status' => 'required',
             'lb' => 'required',
-            'rek' => 'required',
         ]);
 
         if ($req->gaji == "0") {
@@ -174,9 +178,8 @@ class EmployeesController extends Controller
         if ($req->hasFile('foto')) {
             $imagePath = $req->file('foto');
             $fileName =  $req->nik . '.' . $imagePath->getClientOriginalExtension();
-            $imagePath->move(public_path('storage/ktp'), $fileName);
-            // Child Stored Employees
-            $karyawan->ktp = $fileName;
+            $imagePath->move(public_path('storage/photo'), $fileName);
+            $karyawan->photo = $fileName;
         }
 
         $gaji = str_replace(',', '', $req->gaji);
