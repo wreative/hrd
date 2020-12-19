@@ -29,8 +29,7 @@ class Employees extends Model
         'rek',
         'detail',
         'kontrak',
-        'loyalitas',
-        'dedikasi'
+        'ld'
     ];
 
     public function relationContract()

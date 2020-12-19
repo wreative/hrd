@@ -25,8 +25,7 @@ class CreateEmployees extends Migration
             $table->string('rek')->nullable();
             $table->string('detail');
             $table->string('kontrak');
-            $table->integer('loyalitas')->nullable();
-            $table->integer('dedikasi')->nullable();
+            $table->integer('ld')->nullable();
         });
     }
 
