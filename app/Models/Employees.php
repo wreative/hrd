@@ -46,4 +46,9 @@ class Employees extends Model
     {
         return $this->belongsTo('App\Models\Salary', 'id', 'e_id');
     }
+
+    public function relationLoyaltyDedication()
+    {
+        return $this->belongsTo('App\Models\LoyaltyDedication', 'e_id', 'ld_id');
+    }
 }

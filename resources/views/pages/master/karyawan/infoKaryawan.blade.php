@@ -8,13 +8,6 @@
 @endsection
 
 @section('content')
-{{-- @if($karyawan->photo != null)
-Ada
-@else
-Tidak Ada
-asset('storage/photo/'.$karyawan->photo)
-@if($karyawan->photo != null) {{ asset('storage/photo/'.$karyawan->photo) }} @else {{ asset('avatar.png') }} @endif
-@endif --}}
 <img alt="image" src="{{ $karyawan->photo != null ? asset('storage/photo/'.$karyawan->photo) : asset('avatar.png') }}"
     class="rounded-circle img-thumbnail mx-auto d-block" width="150px" height="150px">
 <div class="card profile-widget">
