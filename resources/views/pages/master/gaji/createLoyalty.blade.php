@@ -144,6 +144,23 @@
                         @enderror
                     </div>
                     <div class="form-group">
+                        <label>{{ __('Tanggal') }}<code>*</code></label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <i class="far fa-calendar"></i>
+                                </div>
+                            </div>
+                            <input type="text" class="form-control datepicker @error('tgl') is-invalid @enderror"
+                                name="tgl" required>
+                            @error('tgl')
+                            <span class="text-danger" role="alert">
+                                {{ $message }}
+                            </span>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label>{{ __('Rank') }}<code>*</code></label>
                         <select class="custom-select @error('rank') is-invalid @enderror" name="rank" required>
                             <option value="1">{{ __('Rank 1') }}</option>

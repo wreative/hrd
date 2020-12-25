@@ -14,10 +14,13 @@ class CreateLd extends Migration
     public function up()
     {
         Schema::create('ld', function (Blueprint $table) {
-            $table->string('e_id');
+            $table->id();
             $table->date('tgl');
+            $table->string('rank');
             $table->string('d_id');
             $table->string('l_id');
+            $table->bigInteger('loyalitas');
+            $table->bigInteger('dedikasi');
         });
     }
 

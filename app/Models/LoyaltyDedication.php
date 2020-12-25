@@ -17,18 +17,19 @@ class LoyaltyDedication extends Model
     protected $table = 'ld';
     public $remember_token = false;
     public $timestamps = false;
-    protected $primaryKey = 'e_id';
 
     protected $fillable = [
-        'e_id',
         'tgl',
+        'rank',
         'd_id',
         'l_id',
+        'loyalitas',
+        'dedikasi'
     ];
 
     public function relationEmployees()
     {
-        return $this->hasOne('App\Models\Employees', 'e_id', 'ld_id');
+        return $this->hasOne('App\Models\Employees', 'id', 'ld_id');
     }
 
     public function relationLoyalty()

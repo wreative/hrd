@@ -75,11 +75,11 @@ class EmployeesController extends Controller
         }
 
         // Long Works as day
-        $date1 = strtotime($req->masuk);
-        $date2 = strtotime($req->kontrak);
-        $hasil = $date2 - $date1;
-        print(round(abs($hasil / 86400)));
-        dd(round(abs($hasil / 86400)));
+        // $date1 = strtotime($req->masuk);
+        // $date2 = strtotime($req->kontrak);
+        // $hasil = $date2 - $date1;
+        // print(round(abs($hasil / 86400)));
+        // dd(round(abs($hasil / 86400)));
 
 
         $gaji = str_replace(',', '', $req->gaji);
