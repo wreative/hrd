@@ -19,10 +19,13 @@ class Loyalty extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'amanah',
-        'produktif',
-        'tw',
-        'total',
+        'absen',
+        'waktu',
+        'uniform',
+        'sop',
+        'tj',
+        'kt',
+        'total'
     ];
 
     public function relationLoyaltyDedication()

@@ -55,7 +55,7 @@ class CreateDetailed extends Migration
             $table->string('tmp_lahir');
             $table->date('tgl_lahir');
             $table->string('tlp');
-            $table->bigInteger('lama_bulan');
+            $table->string('lama_bulan')->nullable();
         });
     }
 

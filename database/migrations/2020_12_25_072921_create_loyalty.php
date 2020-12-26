@@ -15,9 +15,12 @@ class CreateLoyalty extends Migration
     {
         Schema::create('loyalty', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('amanah');
-            $table->bigInteger('produktif');
-            $table->bigInteger('tw');
+            $table->bigInteger('absen');
+            $table->bigInteger('waktu');
+            $table->bigInteger('uniform');
+            $table->bigInteger('sop');
+            $table->bigInteger('tj');
+            $table->bigInteger('kt');
             $table->bigInteger('total');
         });
     }

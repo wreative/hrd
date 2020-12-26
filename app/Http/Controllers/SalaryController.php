@@ -51,7 +51,8 @@ class SalaryController extends Controller
     {
         $karyawan = DB::table('employees')
             ->join('detailed', 'employees.id', '=', 'detailed.id')
-            ->select('employees.id', 'divisi', 'jabatan', 'nama', 'loyalitas', 'dedikasi')
+            // ->select('employees.id', 'divisi', 'jabatan', 'nama', 'loyalitas', 'dedikasi')
+            ->select('employees.id', 'divisi', 'jabatan', 'nama')
             ->get();
         return view('pages.master.gaji.createGaji', ['karyawan' => $karyawan]);
     }

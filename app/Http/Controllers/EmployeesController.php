@@ -59,7 +59,7 @@ class EmployeesController extends Controller
             'tlp' => 'required',
             'foto' => 'image|mimes:jpeg,png,jpg,svg|max:2000',
             'status' => 'required',
-            'lb' => 'required',
+            // 'lb' => 'required',
         ]);
 
         if ($req->gaji == "0") {
@@ -166,7 +166,7 @@ class EmployeesController extends Controller
             'tlp' => 'required',
             'foto' => 'image|mimes:jpeg,png,jpg,svg|max:2000',
             'status' => 'required',
-            'lb' => 'required',
+            // 'lb' => 'required',
         ]);
 
         if ($req->gaji == "0") {

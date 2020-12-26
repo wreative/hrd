@@ -1,5 +1,6 @@
 "use strict";
 
 $("#loyalty").dataTable({
-    responsive: true
+    responsive: true,
+    dom: "Qfrtip"
 });

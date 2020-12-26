@@ -29,7 +29,8 @@ class LoyaltyController extends Controller
 
     public function index()
     {
-        $karyawan = Employees::with('relationContract')->get();
+        // $karyawan = Employees::with('relationContract')->get();
+        $karyawan = LoyaltyDedication::with('relationEmployees', 'relationLoyalty', 'relationDedication')->get();
         return view('pages.master.gaji.loyalty', ['karyawan' => $karyawan]);
     }
 
@@ -86,19 +87,17 @@ class LoyaltyController extends Controller
             'total' => $dedicationTotal,
         ]);
 
-        $count = DB::table('loyalty')->select('id')->orderByDesc('id')->limit('1')->first();
+        $count = DB::table('loyalty')->select('id')->orderByDesc('id')->limit('1')->first()->id;
 
         LoyaltyDedication::create([
-            'tgl' => $date,
+            'tgl' => $req->tgl,
             'rank' => $req->rank,
             'd_id' => $count,
             'l_id' => $count,
+            'e_id' => $karyawan->id,
             'loyalitas' => $loyalty,
             'dedikasi' => $dedication,
         ]);
-
-        $karyawan->l_id = $count;
-        $karyawan->save();
 
         return redirect()->route('createSalary');
     }

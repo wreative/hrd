@@ -29,7 +29,6 @@ class Employees extends Model
         'rek',
         'detail',
         'kontrak',
-        'ld'
     ];
 
     public function relationContract()
@@ -49,6 +48,6 @@ class Employees extends Model
 
     public function relationLoyaltyDedication()
     {
-        return $this->belongsTo('App\Models\LoyaltyDedication', 'id', 'ld_id');
+        return $this->hasOne('App\Models\LoyaltyDedication', 'id', 'e_id');
     }
 }

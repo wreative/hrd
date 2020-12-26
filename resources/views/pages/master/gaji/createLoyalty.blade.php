@@ -163,7 +163,7 @@
                     <div class="form-group">
                         <label>{{ __('Rank') }}<code>*</code></label>
                         <select class="custom-select @error('rank') is-invalid @enderror" name="rank" required>
-                            <option value="1">{{ __('Rank 1') }}</option>
+                            <option value="1" selected>{{ __('Rank 1') }}</option>
                             <option value="2">{{ __('Rank 2') }}</option>
                             <option value="3">{{ __('Rank 3') }}</option>
                         </select>

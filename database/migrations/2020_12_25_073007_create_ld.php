@@ -19,6 +19,7 @@ class CreateLd extends Migration
             $table->string('rank');
             $table->string('d_id');
             $table->string('l_id');
+            $table->string('e_id');
             $table->bigInteger('loyalitas');
             $table->bigInteger('dedikasi');
         });

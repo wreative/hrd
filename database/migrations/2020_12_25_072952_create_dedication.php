@@ -15,12 +15,9 @@ class CreateDedication extends Migration
     {
         Schema::create('dedication', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('absen');
-            $table->bigInteger('waktu');
-            $table->bigInteger('uniform');
-            $table->bigInteger('sop');
-            $table->bigInteger('tj');
-            $table->bigInteger('kt');
+            $table->bigInteger('amanah');
+            $table->bigInteger('produktif');
+            $table->bigInteger('tw');
             $table->bigInteger('total');
         });
     }

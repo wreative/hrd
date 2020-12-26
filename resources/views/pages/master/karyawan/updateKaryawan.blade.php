@@ -38,10 +38,10 @@
                 @enderror
             </div>
             <div class="form-group">
-                <label>{{ __('Lama Bekerja') }}<code>*</code></label>
+                <label>{{ __('Lama Bekerja') }}</label>
                 <div class="input-group">
                     <input class="form-control @error('lb') is-invalid @enderror" type="number"
-                        value="{{ $karyawan->relationDetailed->lama_bulan }}" name="lb" required>
+                        value="{{ $karyawan->relationDetailed->lama_bulan }}" name="lb">
                     <div class="input-group-prepend">
                         <div class="input-group-text">
                             {{ __('Bulan') }}

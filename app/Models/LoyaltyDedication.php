@@ -23,22 +23,23 @@ class LoyaltyDedication extends Model
         'rank',
         'd_id',
         'l_id',
+        'e_id',
         'loyalitas',
         'dedikasi'
     ];
 
     public function relationEmployees()
     {
-        return $this->hasOne('App\Models\Employees', 'id', 'ld_id');
+        return $this->belongsTo('App\Models\Employees', 'e_id', 'id');
     }
 
     public function relationLoyalty()
     {
-        return $this->belongsTo('App\Models\Loyalty', 'id', 'l_id');
+        return $this->belongsTo('App\Models\Loyalty', 'l_id', 'id');
     }
 
     public function relationDedication()
     {
-        return $this->belongsTo('App\Models\Dedication', 'id', 'id', 'd_id');
+        return $this->belongsTo('App\Models\Dedication', 'd_id', 'id');
     }
 }

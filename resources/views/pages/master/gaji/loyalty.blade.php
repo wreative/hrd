@@ -14,9 +14,6 @@
             <thead>
                 <tr>
                     <th class="text-center">
-                        {{ __('#') }}
-                    </th>
-                    <th class="text-center">
                         {{ __('ID') }}
                     </th>
                     <th>{{ __('Nama') }}</th>
@@ -26,18 +23,15 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($karyawan as $number => $k)
+                @foreach($karyawan as $k)
                 <tr>
-                    <td class="text-center">
-                        {{ $number+1 }}
-                    </td>
                     <td class="text-center">
                         {{ $k->kode }}
                     </td>
                     <td>{{ $k->nama }}</td>
                     <td>{{ __('Rp.').number_format($k->dedikasi) }}</td>
                     <td>{{ __('Rp.').number_format($k->loyalitas) }}</td>
-                    <td>{{ __('Rp.').number_format($k->relationContract->gaji) }}</td>
+                    {{-- <td>{{ __('Rp.').number_format($k->relationContract->gaji) }}</td> --}}
                 </tr>
                 @endforeach
             </tbody>
