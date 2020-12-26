@@ -29,7 +29,6 @@ class LoyaltyController extends Controller
 
     public function index()
     {
-        // $karyawan = Employees::with('relationContract')->get();
         $karyawan = LoyaltyDedication::with('relationEmployees', 'relationLoyalty', 'relationDedication')->get();
         return view('pages.master.gaji.loyalty', ['karyawan' => $karyawan]);
     }
