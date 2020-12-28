@@ -193,12 +193,21 @@ class SalaryController extends Controller
 
     public function check(Request $req)
     {
-        $karyawan = DB::table('employees')
+        // $karyawan = DB::table('employees')
+        //     ->join('contract', 'employees.kontrak', '=', 'contract.id')
+        //     ->select('loyalitas', 'dedikasi', 'gaji', 'nama')
+        //     ->where('employees.id', '=', $req->id)
+        //     ->get();
+        $karyawan = DB::table('ld')
+            ->select('ld.tgl', 'ld.loyalitas', 'ld.dedikasi', 'employees.nama', 'contract.gaji')
+            ->join('employees', 'ld.e_id', '=', 'employees.id')
             ->join('contract', 'employees.kontrak', '=', 'contract.id')
-            ->select('loyalitas', 'dedikasi', 'gaji', 'nama')
             ->where('employees.id', '=', $req->id)
+            ->orderBy('ld.tgl', 'desc')
+            ->limit(1)
             ->get();
-        return Response()->json(['status' => 'sukses', 'karyawan' => $karyawan]);
+        // return Response()->json(['status' => 'sukses', 'karyawan' => $karyawan]);
+        return Response()->json(['karyawan' => $karyawan]);
     }
 
     public function input(Request $req)
