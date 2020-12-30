@@ -23,6 +23,8 @@ class CreateSalary extends Migration
             $table->bigInteger('penerimaan');
             $table->bigInteger('pengurangan');
             $table->bigInteger('total');
+            $table->enum('status', ['Pending', 'Sukses', 'Ditolak']);
+            $table->string('m_id')->nullable();
         });
     }
 

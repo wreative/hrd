@@ -26,7 +26,9 @@ class Salary extends Model
         'gaji',
         'penerimaan',
         'pengurangan',
-        'total'
+        'total',
+        'status',
+        'm_id'
     ];
 
     public function relationEmployees()
