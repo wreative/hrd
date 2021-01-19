@@ -24,9 +24,11 @@
                 <a class="nav-link has-dropdown" href="javascript:void(0)"><i class="fas fa-hand-holding-usd"></i>
                     <span>{{ __('Gaji') }}</span></a>
                 <ul class="dropdown-menu">
+                    @if (Auth::user()->previleges == "Administrator")
                     <li class="{{ Request::route()->getName() == 'masterSalary' ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('masterSalary') }}">{{ __('Daftar Gaji Karyawan') }}</a>
                     </li>
+                    @endif
                     <li class="{{ Request::route()->getName() == 'masterLoyalty' ? 'active' : '' }}">
                         <a class="nav-link"
                             href="{{ route('masterLoyalty') }}">{{ __('Daftar Loyalitas & Dedikasi') }}</a>
@@ -34,9 +36,11 @@
                     <li class="{{ Request::route()->getName() == 'createLoyalty' ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('createLoyalty') }}">{{ __('Loyalitas & Dedikasi') }}</a>
                     </li>
+                    @if (Auth::user()->previleges == "Administrator")
                     <li class="{{ Request::route()->getName() == 'createSalary' ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('createSalary') }}">{{ __('Tambah Gaji Karyawan') }}</a>
                     </li>
+                    @endif
                 </ul>
             </li>
             @if (Auth::user()->previleges == "Administrator")
@@ -50,10 +54,12 @@
                 <a class="nav-link" href="{{ route('employeesReport') }}"><i class="fas fa-file-alt"></i>
                     <span>{{ __('Karyawan') }}</span></a>
             </li>
+            @if (Auth::user()->previleges == "Administrator")
             <li class="{{ Request::route()->getName() == 'masterEmployees' ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('employeesReport') }}"><i class="fas fa-file-invoice-dollar"></i>
                     <span>{{ __('Gaji') }}</span></a>
             </li>
+            @endif
         </ul>
     </aside>
 </div>
