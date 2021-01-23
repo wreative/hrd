@@ -13,8 +13,8 @@
                         class="fas fa-fire"></i><span>{{ __('Dashboard') }}</span></a>
             </li>
             <li class="menu-header">{{ __('Master') }}</li>
-            <li class="{{ Request::route()->getName() == 'masterEmployees' ? 'active' : '' }}">
-                <a class="nav-link" href="{{ route('masterEmployees') }}"><i class="fas fa-users"></i>
+            <li class="{{ Request::route()->getName() == 'employees.index' ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('employees.index') }}"><i class="fas fa-users"></i>
                     <span>{{ __('Karyawan') }}</span></a>
             </li>
             <li class="nav-item dropdown {{ Request::route()->getName() == 'masterSalary' ? 'active' : (

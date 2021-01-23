@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,15 +23,7 @@ Auth::routes(['reset' => false, 'register' => false]);
 Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 // Karyawan
-Route::get('/employees', [App\Http\Controllers\EmployeesController::class, 'index'])
-    ->name('masterEmployees');
-Route::get('/employees/create', [App\Http\Controllers\EmployeesController::class, 'create'])
-    ->name('createEmployees');
-Route::post('/employees/store', [App\Http\Controllers\EmployeesController::class, 'store'])
-    ->name('storeEmployees');
-Route::get('/employees/edit/{id}', [App\Http\Controllers\EmployeesController::class, 'edit']);
-Route::put('/employees/update/{id}', [App\Http\Controllers\EmployeesController::class, 'update']);
-Route::get('/employees/info/{id}', [App\Http\Controllers\EmployeesController::class, 'info']);
+Route::resource('employees', App\Http\Controllers\EmployeesController::class);
 
 // User
 Route::post('/user/name', [App\Http\Controllers\UserController::class, 'changeName'])

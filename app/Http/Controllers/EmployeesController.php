@@ -59,7 +59,6 @@ class EmployeesController extends Controller
             'tlp' => 'required',
             'foto' => 'image|mimes:jpeg,png,jpg,svg|max:2000',
             'status' => 'required',
-            // 'lb' => 'required',
         ]);
 
         if ($req->gaji == "0") {
@@ -124,10 +123,10 @@ class EmployeesController extends Controller
             'rek' => $req->rek
         ]);
 
-        return redirect()->route('masterEmployees');
+        return redirect()->route('employees.index');
     }
 
-    public function delete($id)
+    public function destroy($id)
     {
         $karyawan = Employees::find($id);
         $kontrak = Contract::find($id);
@@ -138,7 +137,7 @@ class EmployeesController extends Controller
         $karyawan->delete();
         $kontrak->delete();
         $detail->delete();
-        return redirect()->route('masterEmployees');
+        return redirect()->route('employees.index');
     }
 
     public function edit($id)
@@ -166,7 +165,6 @@ class EmployeesController extends Controller
             'tlp' => 'required',
             'foto' => 'image|mimes:jpeg,png,jpg,svg|max:2000',
             'status' => 'required',
-            // 'lb' => 'required',
         ]);
 
         if ($req->gaji == "0") {
@@ -217,10 +215,10 @@ class EmployeesController extends Controller
         $karyawan->save();
         $kontrak->save();
         $detail->save();
-        return redirect()->route('masterEmployees');
+        return redirect()->route('employees.index');
     }
 
-    public function info($id)
+    public function show($id)
     {
         $karyawan = Employees::with('relationContract', 'relationDetailed')->find($id);
         return view('pages.master.karyawan.infoKaryawan', compact('karyawan'));

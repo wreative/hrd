@@ -13,7 +13,7 @@
     {{ __('ID yang digunakan untuk mengidentifikasi setiap karyawan pada perusahaan.') }}
 </p>
 <div class="card">
-    <form method="POST" action="{{ route('storeEmployees') }}" enctype="multipart/form-data">
+    <form method="POST" action="{{ route('employees.store') }}" enctype="multipart/form-data">
         @csrf
         <input type="hidden" value="{{ $kode }}" name="kode">
         <div class="card-body">
@@ -246,7 +246,6 @@
             </div>
             <div class="form-group">
                 <label>{{ __('Foto') }}</label>
-                {{-- <input type="text" class="form-control @error('foto') is-invalid @enderror" name="foto" required> --}}
                 <div class="custom-file">
                     <input type="file" class="custom-file-input" name="foto"
                         accept="image/png, image/jpeg, image/jpg, image/svg" id="foto">

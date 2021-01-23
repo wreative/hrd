@@ -13,7 +13,7 @@
     {{ __('ID yang digunakan untuk mengidentifikasi setiap karyawan pada perusahaan.') }}
 </p>
 <div class="card">
-    <form method="POST" action="/employees/update/{{ $karyawan->id }}" enctype="multipart/form-data">
+    <form method="POST" action="{{ route('employees.update',$karyawan->id) }}" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         <div class="card-body">
@@ -166,9 +166,9 @@
                 @endif
             </div>
             <div class="form-group">
-                <label>{{ __('No Rekening') }}<code>*</code></label>
+                <label>{{ __('No Rekening') }}</label>
                 <input type="text" class="form-control text-uppercase @error('rek') is-invalid @enderror"
-                    value="{{ $karyawan->rek }}" name="rek" required>
+                    value="{{ $karyawan->rek }}" name="rek">
                 @error('rek')
                 <span class="text-danger" role="alert">
                     {{ $message }}

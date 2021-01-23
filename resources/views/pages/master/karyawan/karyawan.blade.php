@@ -9,11 +9,10 @@
 @section('content')
 <div class="card">
     <div class="card-header">
-        <a href="{{ route('createEmployees') }}" class="btn btn-icon icon-left btn-primary">
+        <a href="{{ route('employees.create') }}" class="btn btn-icon icon-left btn-primary">
             <i class="far fa-edit"></i>{{ __(' Tambah Karyawan') }}</a>
     </div>
     <div class="card-body">
-        {{-- <div class="table-responsive"> --}}
         <table class="table-striped table" id="karyawan" width="100%">
             <thead>
                 <tr>
@@ -44,24 +43,25 @@
                         <span class="badge badge-info">{{ $k->status }}</span>
                     </td>
                     <td>
-                        <a href="/employees/edit/{{ $k->id }}" class="btn btn-primary btn-action mb-1 mt-1 mr-1"
+                        <a href="/employees/{{ $k->id }}/edit" class="btn btn-primary btn-action mb-1 mt-1 mr-1"
                             data-toggle="tooltip" title="Edit"><i class="fas fa-pencil-alt"></i></a>
-                        <a href="/employees/info/{{ $k->id }}" class="btn btn-info btn-action mb-1 mt-1 mr-1"
+                        <a href="/employees/{{ $k->id }}" class="btn btn-info btn-action mb-1 mt-1 mr-1"
                             data-toggle="tooltip" title="Lihat Lebih Lengkap"><i class="fas fa-eye"></i></a>
                         @if (Auth::user()->previleges == "Administrator")
-
-                        <a class="btn btn-danger btn-action mb-1 mt-1" style="cursor: pointer" data-toggle="tooltip"
-                            title="Delete"
-                            data-confirm="Apakah Anda Yakin?|Aksi ini tidak dapat dikembalikan. Apakah ingin melanjutkan?"
-                            data-confirm-yes="window.open('/employees/delete/{{ $k->id }}','_self')"><i
-                                class="fas fa-trash"></i></a>
+                        <form id="del-data" action="{{ route('employees.destroy',$k->id) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button class="btn btn-danger btn-action mb-1 mt-1" data-toggle="tooltip" title="Delete"
+                                data-confirm="Apakah Anda Yakin?|Aksi ini tidak dapat dikembalikan. Apakah ingin melanjutkan?"
+                                data-confirm-yes="document.getElementById('del-data').submit();"><i
+                                    class="fas fa-trash"></i></button>
+                        </form>
                         @endif
                     </td>
                 </tr>
                 @endforeach
             </tbody>
         </table>
-        {{-- </div> --}}
     </div>
 </div>
 @endsection
