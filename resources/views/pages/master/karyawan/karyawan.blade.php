@@ -23,7 +23,9 @@
                     <th>{{ __('Divisi') }}</th>
                     <th>{{ __('Jabatan') }}</th>
                     <th>{{ __('Lama Bekerja') }}</th>
+                    @if (Auth::user()->previleges == "Administrator")
                     <th>{{ __('Gaji') }}</th>
+                    @endif
                     <th>{{ __('Status') }}</th>
                     <th>{{ __('Aksi') }}</th>
                 </tr>
@@ -38,7 +40,9 @@
                     <td>{{ $k->relationDetailed->divisi }}</td>
                     <td>{{ $k->relationDetailed->jabatan }}</td>
                     <td>{{ $k->relationDetailed->lama_bulan.__(' Bulan') }}</td>
+                    @if (Auth::user()->previleges == "Administrator")
                     <td>{{ __('Rp.').number_format($k->relationContract->gaji) }}</td>
+                    @endif
                     <td>
                         <span class="badge badge-info">{{ $k->status }}</span>
                     </td>
