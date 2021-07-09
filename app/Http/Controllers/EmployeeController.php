@@ -79,7 +79,7 @@ class EmployeeController extends Controller
         } elseif ($req->hasFile('foto')) {
             $imagePath = $req->file('foto');
             $fileName =  $req->nik . '.' . $imagePath->getClientOriginalExtension();
-            $imagePath->move(public_path('storage/photo'), $fileName);
+            $imagePath->move(public_path('storage'), $fileName);
         } else {
             $fileName = '';
         }
@@ -123,16 +123,16 @@ class EmployeeController extends Controller
 
     public function destroy($id)
     {
-        $karyawan = Employees::find($id);
-        $kontrak = Contract::find($id);
+        $employee = Employee::find($id);
+        $contract = Contract::find($id);
         $detail = Detailed::find($id);
-        if (Storage::disk('public')->exists('photo/' . $karyawan->photo)) {
-            Storage::disk('public')->delete('photo/' . $karyawan->photo);
+        if (Storage::disk('public')->exists($employee->photo)) {
+            Storage::disk('public')->delete($employee->photo);
         }
-        $karyawan->delete();
-        $kontrak->delete();
+        $contract->delete();
         $detail->delete();
-        return redirect()->route('employees.index');
+        $employee->delete();
+        return redirect()->route('employee.index');
     }
 
     public function edit($id)
@@ -239,6 +239,6 @@ class EmployeeController extends Controller
             ->select('id')
             ->orderByDesc('id')
             ->limit('1')
-            ->first()->id + 1;
+            ->first()->id;
     }
 }

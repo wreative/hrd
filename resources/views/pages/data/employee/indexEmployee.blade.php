@@ -17,6 +17,9 @@
             <thead>
                 <tr>
                     <th class="text-center">
+                        {{ __('NO') }}
+                    </th>
+                    <th class="text-center">
                         {{ __('Kode') }}
                     </th>
                     <th>{{ __('Nama') }}</th>
@@ -31,36 +34,47 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($employee as $number => $k)
+                @foreach($employee as $number => $e)
                 <tr>
                     <td class="text-center">
-                        {{ $k->kode }}
+                        {{ $e->number + 1 }}
                     </td>
-                    <td>{{ $k->nama }}</td>
-                    <td>{{ $k->relationDetailed->divisi }}</td>
-                    <td>{{ $k->relationDetailed->jabatan }}</td>
-                    <td>{{ $k->relationDetailed->lama_bulan.__(' Bulan') }}</td>
+                    <td class="text-center">
+                        {{ $e->kode }}
+                    </td>
+                    <td>{{ $e->nama }}</td>
+                    <td>{{ $e->relationDetailed->divisi }}</td>
+                    <td>{{ $e->relationDetailed->jabatan }}</td>
+                    <td>{{ $e->relationDetailed->lama_bulan.__(' Bulan') }}</td>
                     @if (Auth::user()->previleges == "Administrator")
-                    <td>{{ __('Rp.').number_format($k->relationContract->gaji) }}</td>
+                    <td>{{ __('Rp.').number_format($e->relationContract->gaji) }}</td>
                     @endif
                     <td>
-                        <span class="badge badge-info">{{ $k->status }}</span>
+                        <span class="badge badge-info">{{ $e->status }}</span>
                     </td>
                     <td>
-                        <a href="/employees/{{ $k->id }}/edit" class="btn btn-primary btn-action mb-1 mt-1 mr-1"
-                            data-toggle="tooltip" title="Edit"><i class="fas fa-pencil-alt"></i></a>
-                        <a href="/employees/{{ $k->id }}" class="btn btn-info btn-action mb-1 mt-1 mr-1"
-                            data-toggle="tooltip" title="Lihat Lebih Lengkap"><i class="fas fa-eye"></i></a>
-                        @if (Auth::user()->previleges == "Administrator")
-                        <form id="del-data" action="{{ route('employees.destroy',$k->id) }}" method="POST">
-                            @csrf
-                            @method('DELETE')
-                            <button class="btn btn-danger btn-action mb-1 mt-1" data-toggle="tooltip" title="Delete"
-                                data-confirm="Apakah Anda Yakin?|Aksi ini tidak dapat dikembalikan. Apakah ingin melanjutkan?"
-                                data-confirm-yes="document.getElementById('del-data').submit();"><i
-                                    class="fas fa-trash"></i></button>
-                        </form>
-                        @endif
+                        <div class="btn-group">
+                            <a href="{{ route('employee.show',$e->id) }}" class="btn btn-primary">{{ __('Lihat') }}</a>
+                            <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split"
+                                data-toggle="dropdown">
+                                <span class="sr-only">{{ __('Toggle Dropdown') }}</span>
+                            </button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="{{ route('employee.edit',$e->id) }}">{{ __('Edit') }}</a>
+                                @if (Auth::user()->previleges == "Administrator")
+                                <form id="del-data{{ $e->id }}" action="{{ route('employee.destroy',$e->id) }}"
+                                    method="POST" class="d-inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <a class="dropdown-item" style="cursor: pointer"
+                                        data-confirm="Apakah Anda Yakin?|Aksi ini tidak dapat dikembalikan. Apakah ingin melanjutkan?"
+                                        data-confirm-yes="document.getElementById('del-data{{ $e->id }}').submit();">
+                                        {{ __('Hapus') }}
+                                    </a>
+                                </form>
+                                @endif
+                            </div>
+                        </div>
                     </td>
                 </tr>
                 @endforeach
@@ -68,7 +82,4 @@
         </table>
     </div>
 </div>
-@endsection
-@section('script')
-<script src="{{ asset('pages/karyawan/karyawan.js') }}"></script>
 @endsection
