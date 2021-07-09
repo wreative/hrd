@@ -23,7 +23,7 @@ Auth::routes(['reset' => false, 'register' => false]);
 Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 // Karyawan
-Route::resource('employees', App\Http\Controllers\EmployeesController::class);
+Route::resource('employee', App\Http\Controllers\EmployeeController::class);
 
 // User
 Route::post('/user/name', [App\Http\Controllers\UserController::class, 'changeName'])

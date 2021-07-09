@@ -9,7 +9,7 @@ use App\Models\Employees;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
-class EmployeesController extends Controller
+class EmployeeController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -29,7 +29,6 @@ class EmployeesController extends Controller
     public function index()
     {
         $karyawan = Employees::with('relationContract', 'relationDetailed')->get();
-        // dd($karyawan);
         return view('pages.master.karyawan.karyawan', compact('karyawan'));
     }
 

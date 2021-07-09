@@ -12,7 +12,7 @@
                 <a href="{{ route('home') }}" class="nav-link"><i
                         class="fas fa-fire"></i><span>{{ __('Dashboard') }}</span></a>
             </li>
-            <li class="menu-header">{{ __('Master') }}</li>
+            <li class="menu-header">{{ __('Data') }}</li>
             <li class="{{ Request::route()->getName() == 'employees.index' ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('employees.index') }}"><i class="fas fa-users"></i>
                     <span>{{ __('Karyawan') }}</span></a>

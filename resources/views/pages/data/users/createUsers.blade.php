@@ -1,15 +1,15 @@
 @extends('layouts.default')
-@section('title', __('HRD BatuBeling | Tambah User'))
-@section('titleContent', __('Tambah User'))
+@section('title', __('pages.title').__(' | Tambah Pengguna'))
+@section('titleContent', __('Tambah Pengguna'))
 @section('breadcrumb', __('Master'))
 @section('morebreadcrumb')
-<div class="breadcrumb-item active">{{ __('User') }}</div>
-<div class="breadcrumb-item active">{{ __('Tambah User') }}</div>
+<div class="breadcrumb-item active">{{ __('Pengguna') }}</div>
+<div class="breadcrumb-item active">{{ __('Tambah Pengguna') }}</div>
 @endsection
 
 @section('content')
 <div class="card">
-    <form method="POST" action="{{ route('storeUser') }}" class="needs-validation">
+    <form method="POST" action="{{ route('users.store') }}">
         @csrf
         <div class="card-body">
             <div class="form-group">
@@ -24,18 +24,16 @@
                 </div>
                 @enderror
             </div>
-
             <div class="form-group">
-                <label for="email">{{ __('Email') }}<code>*</code></label>
-                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email"
-                    value="{{ old('email') }}" required autocomplete="email">
-                @error('email')
+                <label for="username">{{ __('Username') }}<code>*</code></label>
+                <input id="username" type="text" class="form-control @error('username') is-invalid @enderror"
+                    name="username" value="{{ old('username') }}" required autocomplete="username">
+                @error('username')
                 <div class="invalid-feedback">
                     {{ $message }}
                 </div>
                 @enderror
             </div>
-
             <div class="form-group">
                 <div class="d-block">
                     <label for="password" class="control-label">{{ __('Password') }}<code>*</code></label>
@@ -48,26 +46,30 @@
                 </div>
                 @enderror
             </div>
-
             <div class="form-group">
-                <label>{{ __('Hak Akses') }}<code>*</code></label>
-                <select class="custom-select @error('previleges') is-invalid @enderror" name="previleges" required>
-                    <option value="Administrator" selected>{{ __('Administrator') }}</option>
-                    <option value="User">{{ __('User') }}</option>
+                <label for="password-confirm" class="control-label">{{ __('Ulangi Password') }}</label>
+                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required
+                    autocomplete="new-password">
+            </div>
+            <div class="form-group">
+                <label>{{ __('Roles') }}<code>*</code></label>
+                <select class="form-control select2 @error('roles') is-invalid @enderror" name="roles" required>
+                    @foreach ($roles as $r)
+                    <option value="{{ $r->id }}">
+                        {{ $r->name }}
+                    </option>
+                    @endforeach
                 </select>
-                @error('previleges')
+                @error('roles')
                 <span class="text-danger" role="alert">
                     {{ $message }}
                 </span>
                 @enderror
             </div>
-        </div>
-        <div class="card-footer text-right">
-            <button class="btn btn-primary mr-1" type="submit">{{ __('Tambah') }}</button>
+            <div class="card-footer text-right">
+                <button class="btn btn-primary mr-1" type="submit">{{ __('pages.add') }}</button>
+            </div>
         </div>
     </form>
 </div>
-@endsection
-@section('script')
-<script src="{{ asset('pages/karyawan/createKaryawan.js') }}"></script>
 @endsection

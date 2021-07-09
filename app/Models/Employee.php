@@ -14,7 +14,7 @@ class Employees extends Model
      * @var array
      */
 
-    protected $table = 'employees';
+    protected $table = 'employee';
     public $remember_token = false;
     public $timestamps = false;
 
