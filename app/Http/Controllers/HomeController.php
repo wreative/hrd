@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Employees;
+use App\Models\Employee;
 use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
@@ -24,10 +24,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $karyawan = Employees::count();
-        $aktif = DB::table('employees')->where('status', '=', 'aktif')->count();
-        $pasif = DB::table('employees')->where('status', '=', 'pasif')->count();
-        $pelamar = DB::table('employees')->where('status', '=', 'pelamar')->count();
+        $karyawan = Employee::count();
+        $aktif = DB::table('employee')->where('status', '=', 'aktif')->count();
+        $pasif = DB::table('employee')->where('status', '=', 'pasif')->count();
+        $pelamar = DB::table('employee')->where('status', '=', 'pelamar')->count();
         return view('home', compact('karyawan', 'aktif', 'pasif', 'pelamar'));
     }
 }

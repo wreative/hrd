@@ -1,7 +1,7 @@
 @extends('layouts.default')
-@section('title', __('HRD BatuBeling | Master Karyawan'))
+@section('title', __('HRD BatuBeling | Data Karyawan'))
 @section('titleContent', __('Karyawan'))
-@section('breadcrumb', __('Master'))
+@section('breadcrumb', __('Data'))
 @section('morebreadcrumb')
 <div class="breadcrumb-item active">{{ __('Karyawan') }}</div>
 @endsection
@@ -9,11 +9,11 @@
 @section('content')
 <div class="card">
     <div class="card-header">
-        <a href="{{ route('employees.create') }}" class="btn btn-icon icon-left btn-primary">
+        <a href="{{ route('employee.create') }}" class="btn btn-icon icon-left btn-primary">
             <i class="far fa-edit"></i>{{ __(' Tambah Karyawan') }}</a>
     </div>
     <div class="card-body">
-        <table class="table-striped table" id="karyawan" width="100%">
+        <table class="table-striped table" id="tables" width="100%">
             <thead>
                 <tr>
                     <th class="text-center">
@@ -31,7 +31,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($karyawan as $number => $k)
+                @foreach($employee as $number => $k)
                 <tr>
                     <td class="text-center">
                         {{ $k->kode }}

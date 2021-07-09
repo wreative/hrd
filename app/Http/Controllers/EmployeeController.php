@@ -5,9 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\Contract;
 use App\Models\Detailed;
 use Illuminate\Http\Request;
-use App\Models\Employees;
+use App\Models\Employee;
+use App\Models\Position;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class EmployeeController extends Controller
 {
@@ -28,21 +31,30 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        $karyawan = Employees::with('relationContract', 'relationDetailed')->get();
-        return view('pages.master.karyawan.karyawan', compact('karyawan'));
+        $employee = Employee::with('relationContract', 'relationDetailed')
+            ->get();
+        return view('pages.data.employee.indexEmployee', [
+            'employee' => $employee
+        ]);
     }
 
     public function create()
     {
-        $karyawan = DB::table('employees')->count();
-        $kode = "EID" . str_pad($karyawan, 4, '0', STR_PAD_LEFT);
-        $jabatan = $this->dataJabatan();
-        return view('pages.master.karyawan.createKaryawan', ['jabatan' => $jabatan, 'kode' => $kode]);
+        $code = "EID" . str_pad(
+            $this->generatedCode('employee'),
+            4,
+            '0',
+            STR_PAD_LEFT
+        );
+        return view('pages.data.employee.createEmployee', [
+            'code' => $code,
+            'position' => Position::all()
+        ]);
     }
 
     public function store(Request $req)
     {
-        $this->validate($req, [
+        Validator::make($req->all(), [
             'nik' => 'required|digits:16',
             'name' => 'required',
             'jk' => 'required',
@@ -58,13 +70,13 @@ class EmployeeController extends Controller
             'tlp' => 'required',
             'foto' => 'image|mimes:jpeg,png,jpg,svg|max:2000',
             'status' => 'required',
-        ]);
+        ])->validate();
 
+        // Nulled 
         if ($req->gaji == "0") {
-            return redirect()->route('createEmployees')->with(['status' => 'Harga tidak boleh kosong']);
-        }
-
-        if ($req->hasFile('foto')) {
+            return Redirect::route('employee.create')
+                ->with(['status' => 'Gaji tidak boleh kosong']);
+        } elseif ($req->hasFile('foto')) {
             $imagePath = $req->file('foto');
             $fileName =  $req->nik . '.' . $imagePath->getClientOriginalExtension();
             $imagePath->move(public_path('storage/photo'), $fileName);
@@ -72,20 +84,10 @@ class EmployeeController extends Controller
             $fileName = '';
         }
 
-        // Long Works as day
-        // $date1 = strtotime($req->masuk);
-        // $date2 = strtotime($req->kontrak);
-        // $hasil = $date2 - $date1;
-        // print(round(abs($hasil / 86400)));
-        // dd(round(abs($hasil / 86400)));
-
-
-        $gaji = str_replace(',', '', $req->gaji);
-
         Contract::create([
             'tgl_masuk' => $req->masuk,
             'akhir_kontrak' => $req->kontrak,
-            'gaji' => $gaji,
+            'gaji' => str_replace(',', '', $req->gaji),
             'no_jaminan' => $req->no_jmn,
             'jenis_jaminan' => $req->jmn,
         ]);
@@ -101,15 +103,9 @@ class EmployeeController extends Controller
             'lama_bulan' => $req->lb,
         ]);
 
-        // if (DB::table('detailed')->count() != '0') {
-        //     $count = DB::table('detailed')->select('id')->orderByDesc('id')->limit('1')->first();
-        // } else {
-        //     $count = DB::table('detailed')->count();
-        // }
+        $count = $this->countID('detailed');
 
-        $count = DB::table('detailed')->select('id')->orderByDesc('id')->limit('1')->first();
-
-        Employees::create([
+        Employee::create([
             'nik' => $req->nik,
             'kode' => $req->kode,
             'nama' => $req->name,
@@ -117,12 +113,12 @@ class EmployeeController extends Controller
             'photo' => $fileName,
             'status' => $req->status,
             'keterangan' => $req->ket,
-            'detail' => $count->id,
-            'kontrak' => $count->id,
+            'detail' => $count,
+            'kontrak' => $count,
             'rek' => $req->rek
         ]);
 
-        return redirect()->route('employees.index');
+        return redirect()->route('employee.index');
     }
 
     public function destroy($id)
@@ -223,21 +219,26 @@ class EmployeeController extends Controller
         return view('pages.master.karyawan.infoKaryawan', compact('karyawan'));
     }
 
-    public function dataJabatan()
+    public function generatedCode($table)
     {
-        $jabatan = array(
-            'Direktur',
-            'Manager',
-            'Koordinator',
-            'Staff',
-            'Karyawan',
-            'Helper',
-            'Driver',
-            'Office Boy',
-            'Kitchen',
-            'Gudang',
-            'Operator',
-        );
-        return $jabatan;
+        do {
+            $random = rand(00001, 99999);
+            $check = DB::table($table)
+                ->select('kode')
+                ->having('kode', '=', $random)
+                ->first();
+        } while ($check != null);
+        return $random;
+    }
+
+    public function countID($table)
+    {
+        return DB::table($table)->count() == 0 ?
+            1 :
+            DB::table($table)
+            ->select('id')
+            ->orderByDesc('id')
+            ->limit('1')
+            ->first()->id + 1;
     }
 }

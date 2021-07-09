@@ -13,9 +13,21 @@
                         class="fas fa-fire"></i><span>{{ __('Dashboard') }}</span></a>
             </li>
             <li class="menu-header">{{ __('Data') }}</li>
-            <li class="{{ Request::route()->getName() == 'employees.index' ? 'active' : '' }}">
-                <a class="nav-link" href="{{ route('employees.index') }}"><i class="fas fa-users"></i>
+            <li class="nav-item dropdown {{ Request::route()->getName() == 'employee.index' ? 'active' : (
+                Request::route()->getName() == 'employee.create' ? 'active' : (                    
+                    Request::route()->getName() == 'employee.edit' ? 'active' : (
+                        Request::route()->getName() == 'employee.show' ? 'active' : ''))) }}">
+                <a href="{{ route('employee.index') }}" class="nav-link has-dropdown" data-toggle="dropdown">
+                    <i class="fas fa-users"></i>
                     <span>{{ __('Karyawan') }}</span></a>
+                <ul class="dropdown-menu">
+                    <li class="{{ Request::route()->getName() == 'employee.index' ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('employee.index') }}">{{ __('Daftar') }}</a>
+                    </li>
+                    <li class="{{ Request::route()->getName() == 'employee.create' ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('employee.create') }}">{{ __('Tambah') }}</a>
+                    </li>
+                </ul>
             </li>
             <li class="nav-item dropdown {{ Request::route()->getName() == 'masterSalary' ? 'active' : (
                     Request::route()->getName() == 'createSalary' ? 'active':(
