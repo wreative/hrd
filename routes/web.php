@@ -63,8 +63,6 @@ Route::post('/salary/store', [App\Http\Controllers\SalaryController::class, 'sto
     ->name('storeSalary');
 Route::post('/salary/input', [App\Http\Controllers\SalaryController::class, 'input'])
     ->name('inputSalary');
-// Route::get('/employees/edit/{id}', [App\Http\Controllers\EmployeesController::class, 'edit']);
-// Route::put('/employees/update/{id}', [App\Http\Controllers\EmployeesController::class, 'update']);
 
 // Loyalitas Dan Dedikasi
 Route::get('/loyalty', [App\Http\Controllers\LoyaltyController::class, 'index'])
