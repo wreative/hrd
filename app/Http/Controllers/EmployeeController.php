@@ -124,8 +124,8 @@ class EmployeeController extends Controller
     public function destroy($id)
     {
         $employee = Employee::find($id);
-        $contract = Contract::find($id);
-        $detail = Detailed::find($id);
+        $contract = Contract::find($employee->kontrak);
+        $detail = Detailed::find($employee->detail);
         if (Storage::disk('public')->exists($employee->photo)) {
             Storage::disk('public')->delete($employee->photo);
         }

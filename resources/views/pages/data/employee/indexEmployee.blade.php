@@ -37,7 +37,7 @@
                 @foreach($employee as $number => $e)
                 <tr>
                     <td class="text-center">
-                        {{ $e->number + 1 }}
+                        {{ $number + 1 }}
                     </td>
                     <td class="text-center">
                         {{ $e->kode }}
