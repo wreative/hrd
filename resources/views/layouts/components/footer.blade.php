@@ -20,6 +20,7 @@
     integrity="sha512-VIF8OqBWob/wmCvrcQs27IrQWwgr3g+iA4QQ4hH/YeuYBIoAUluiwr/NX5WQAQgUaVx39hs6l05cEOIGEB+dmA=="
     crossorigin="anonymous"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="{{ asset('pages/default.js') }}"></script>
 <script>
     $("#name").fireModal({body: 
         '<form method="POST" action="{{ route('changeName') }}" class="needs-validation">

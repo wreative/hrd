@@ -84,6 +84,3 @@
     </div>
 </div>
 @endsection
-@section('script')
-<script src="{{ asset('pages/home.js') }}"></script>
-@endsection
