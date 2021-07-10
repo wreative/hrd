@@ -12,7 +12,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 
 <!-- JS Libraies & Template -->
-<script src="{{ asset('assets.js') }}"></script>
+<script src="{{ mix('assets.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.68/vfs_fonts.min.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script src="{{ asset('pages/default.js') }}"></script>

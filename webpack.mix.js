@@ -19,12 +19,13 @@ mix.styles(
         "resources/css/searchBuilder.dataTables.min.css",
         "resources/css/buttons.bootstrap4.min.css",
         "resources/css/responsive.bootstrap4.min.css",
+        "resources/css/selectric.css",
         "resources/css/select2.min.css",
         "resources/css/style.css",
         "resources/css/components.css"
     ],
     "public/assets.css"
-);
+).version();
 
 // Javascript
 mix.scripts(
@@ -42,10 +43,13 @@ mix.scripts(
         "resources/js/dataTables.responsive.min.js",
         "resources/js/responsive.bootstrap4.min.js",
         "resources/js/Chart.min.js",
+        "resources/js/jquery.selectric.js",
         "resources/js/select2.full.min.js",
         "resources/js/cleave.min.js",
         "resources/js/cleave-phone.id.js",
         "resources/js/scripts.js"
     ],
     "public/assets.js"
-);
+).version();
+
+mix.disableNotifications();

@@ -47,7 +47,8 @@
                     </div>
                     <div class="form-group">
                         <label>{{ __('Divisi') }}<code>*</code></label>
-                        <select class="custom-select @error('divisi') is-invalid @enderror" name="divisi" required>
+                        <select class="custom-select selectric @error('divisi') is-invalid @enderror" name="divisi"
+                            required>
                             <option value="Accounting" selected>{{ __('Accounting') }}</option>
                             <option value="Admin">{{ __('Admin') }}</option>
                             <option value="Supplier">{{ __('Supplier') }}</option>
@@ -178,7 +179,8 @@
                     </div>
                     <div class="form-group">
                         <label>{{ __('Jabatan') }}<code>*</code></label>
-                        <select class="custom-select @error('jabatan') is-invalid @enderror" name="jabatan" required>
+                        <select class="custom-select selectric @error('jabatan') is-invalid @enderror" name="jabatan"
+                            required>
                             @foreach ($position as $p)
                             <option value="{{ $p->id }}">
                                 {{ $p->name }}

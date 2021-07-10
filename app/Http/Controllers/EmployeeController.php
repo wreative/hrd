@@ -137,9 +137,12 @@ class EmployeeController extends Controller
 
     public function edit($id)
     {
-        $karyawan = Employees::with('relationContract', 'relationDetailed')->find($id);
-        $jabatan = $this->dataJabatan();
-        return view('pages.master.karyawan.updateKaryawan', compact('karyawan', 'jabatan'));
+        $employee = Employee::with('relationContract', 'relationDetailed')
+            ->find($id);
+        return view('pages.data.employee.updateEmployee', [
+            'employee' => $employee,
+            'position' => Position::all()
+        ]);
     }
 
     public function update($id, Request $req)
