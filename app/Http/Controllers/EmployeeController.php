@@ -7,6 +7,7 @@ use App\Models\Detailed;
 use Illuminate\Http\Request;
 use App\Models\Employee;
 use App\Models\Position;
+use Facade\FlareClient\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
@@ -48,7 +49,7 @@ class EmployeeController extends Controller
         );
         return view('pages.data.employee.createEmployee', [
             'code' => $code,
-            'position' => Position::all()
+            'position' => Position::all(),
         ]);
     }
 
@@ -72,7 +73,6 @@ class EmployeeController extends Controller
             'status' => 'required',
         ])->validate();
 
-        // Nulled 
         if ($req->gaji == "0") {
             return Redirect::route('employee.create')
                 ->with(['status' => 'Gaji tidak boleh kosong']);
@@ -118,7 +118,7 @@ class EmployeeController extends Controller
             'rek' => $req->rek
         ]);
 
-        return redirect()->route('employee.index');
+        return Redirect::route('employee.index');
     }
 
     public function destroy($id)
@@ -132,7 +132,7 @@ class EmployeeController extends Controller
         $contract->delete();
         $detail->delete();
         $employee->delete();
-        return redirect()->route('employee.index');
+        return Redirect::route('employee.index');
     }
 
     public function edit($id)
@@ -147,7 +147,7 @@ class EmployeeController extends Controller
 
     public function update($id, Request $req)
     {
-        $this->validate($req, [
+        Validator::make($req->all(), [
             'nik' => 'required|digits:16',
             'name' => 'required',
             'jk' => 'required',
@@ -163,41 +163,39 @@ class EmployeeController extends Controller
             'tlp' => 'required',
             'foto' => 'image|mimes:jpeg,png,jpg,svg|max:2000',
             'status' => 'required',
-        ]);
+        ])->validate();
 
         if ($req->gaji == "0") {
-            return redirect()->route('createEmployees')->with(['status' => 'Harga tidak boleh kosong']);
-        }
-
-        $karyawan = Employees::find($id);
-
-        if ($req->hasFile('foto')) {
+            return Redirect::route('employee.create')
+                ->with(['status' => 'Gaji tidak boleh kosong']);
+        } elseif ($req->hasFile('foto')) {
             $imagePath = $req->file('foto');
             $fileName =  $req->nik . '.' . $imagePath->getClientOriginalExtension();
-            $imagePath->move(public_path('storage/photo'), $fileName);
-            $karyawan->photo = $fileName;
+            $imagePath->move(public_path('storage'), $fileName);
+        } else {
+            $fileName = '';
         }
 
-        $gaji = str_replace(',', '', $req->gaji);
+        $employee = Employee::find($id);
 
-        // Stored Employees
-        $karyawan->nik = $req->nik;
-        $karyawan->nama = $req->name;
-        $karyawan->jk = $req->jk;
-        $karyawan->status = $req->status;
-        $karyawan->keterangan = $req->ket;
-        $karyawan->rek = $req->rek;
+        // Stored Employee
+        $employee->nik = $req->nik;
+        $employee->nama = $req->name;
+        $employee->jk = $req->jk;
+        $employee->status = $req->status;
+        $employee->keterangan = $req->ket;
+        $employee->rek = $req->rek;
 
         // Find ID
-        $detail = Detailed::find($karyawan->kontrak);
-        $kontrak = Contract::find($karyawan->kontrak);
+        $detail = Detailed::find($employee->detail);
+        $contract = Contract::find($employee->kontrak);
 
         // Stored Contract
-        $kontrak->tgl_masuk = $req->masuk;
-        $kontrak->akhir_kontrak = $req->kontrak;
-        $kontrak->gaji = $gaji;
-        $kontrak->no_jaminan = $req->no_jmn;
-        $kontrak->jenis_jaminan = $req->jmn;
+        $contract->tgl_masuk = $req->masuk;
+        $contract->akhir_kontrak = $req->kontrak;
+        $contract->gaji = str_replace(',', '', $req->gaji);
+        $contract->no_jaminan = $req->no_jmn;
+        $contract->jenis_jaminan = $req->jmn;
 
         // Stored Detailed
         $detail->divisi = $req->divisi;
@@ -210,16 +208,19 @@ class EmployeeController extends Controller
         $detail->lama_bulan = $req->lb;
 
         // Saved Datas
-        $karyawan->save();
-        $kontrak->save();
+        $employee->save();
+        $contract->save();
         $detail->save();
-        return redirect()->route('employees.index');
+        return Redirect::route('employee.index');
     }
 
     public function show($id)
     {
-        $karyawan = Employees::with('relationContract', 'relationDetailed')->find($id);
-        return view('pages.master.karyawan.infoKaryawan', compact('karyawan'));
+        $employee = Employee::with('relationContract', 'relationDetailed')
+            ->find($id);
+        return view('pages.data.employee.showEmployee', [
+            'employee' => $employee
+        ]);
     }
 
     public function generatedCode($table)
@@ -243,5 +244,30 @@ class EmployeeController extends Controller
             ->orderByDesc('id')
             ->limit('1')
             ->first()->id;
+    }
+
+    function dataDivision()
+    {
+        return $divison = [
+            'Semua' => [
+                "Accounting", "Admin", "Supplier", "Koperasi", "IT Cyber", "Freelance",
+            ],
+            'Food' => [
+                "Soto", "Steak"
+            ],
+            'Aplikator' => ["Konstruksi", "Produksi"],
+            'Almaas' => ["Dakwah", "Sosial", "Usaha"],
+            'Express' => ["Internal", "Eksternal"]
+        ];
+
+        // $divison[] = [
+        //     array(
+        //         "Accounting", "Admin", "Supplier", "Koperasi", "IT Cyber", "Freelance",
+        //         array("Food", "Soto", "Steak"),
+        //         array("Aplikator", "Konstruksi", "Produksi"),
+        //         array("Almaas", "Dakwah", "Sosial", "Usaha"),
+        //         array("Express", "Internal", "Eksternal")
+        //     );
+        // ];
     }
 }

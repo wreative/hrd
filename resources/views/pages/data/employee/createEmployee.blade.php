@@ -167,7 +167,7 @@
                     </div>
                     <div class="form-group">
                         <label>{{ __('Jenis Kelamin') }}<code>*</code></label>
-                        <select class="custom-select @error('jk') is-invalid @enderror" name="jk" required>
+                        <select class="custom-select selectric @error('jk') is-invalid @enderror" name="jk" required>
                             <option value="Laki-Laki" selected>{{ __('Laki-Laki') }}</option>
                             <option value="Perempuan">{{ __('Perempuan') }}</option>
                         </select>
@@ -259,7 +259,8 @@
                     </div>
                     <div class="form-group">
                         <label>{{ __('Status') }}<code>*</code></label>
-                        <select class="custom-select @error('status') is-invalid @enderror" name="status" required>
+                        <select class="custom-select selectric @error('status') is-invalid @enderror" name="status"
+                            required>
                             <option value="Aktif" selected>{{ __('Aktif') }}</option>
                             <option value="Pasif">{{ __('Pasif') }}</option>
                             <option value="Pelamar">{{ __('Pelamar') }}</option>

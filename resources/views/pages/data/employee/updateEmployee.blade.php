@@ -33,7 +33,7 @@
                         <label>{{ __('Lama Bekerja') }}</label>
                         <div class="input-group">
                             <input class="form-control @error('lb') is-invalid @enderror" type="number"
-                                value="{{ $employee->lb }}" name="lb">
+                                value="{{ $employee->relationDetailed->lama_bulan }}" name="lb">
                             <div class="input-group-prepend">
                                 <div class="input-group-text">
                                     {{ __('Bulan') }}
@@ -48,26 +48,71 @@
                     </div>
                     <div class="form-group">
                         <label>{{ __('Divisi') }}<code>*</code></label>
-                        <select class="custom-select @error('divisi') is-invalid @enderror" name="divisi" required>
-                            <option value="Accounting" selected>{{ __('Accounting') }}</option>
-                            <option value="Admin">{{ __('Admin') }}</option>
-                            <option value="Supplier">{{ __('Supplier') }}</option>
-                            <option value="Koperasi">{{ __('Koperasi') }}</option>
-                            <option value="IT Cyber">{{ __('IT Cyber') }}</option>
-                            <option value="Freelance">{{ __('Freelance') }}</option>
+                        <select class="custom-select selectric @error('divisi') is-invalid @enderror" name="divisi"
+                            required>
+                            <option value="Accounting"
+                                {{ $employee->relationDetailed->divisi == 'Accounting' ? 'selected' : '' }}>
+                                {{ __('Accounting') }}
+                            </option>
+                            <option value="Admin"
+                                {{ $employee->relationDetailed->divisi == 'Admin' ? 'selected' : '' }}>
+                                {{ __('Admin') }}
+                            </option>
+                            <option value="Supplier"
+                                {{ $employee->relationDetailed->divisi == 'Supplier' ? 'selected' : '' }}>
+                                {{ __('Supplier') }}
+                            </option>
+                            <option value="Koperasi"
+                                {{ $employee->relationDetailed->divisi == 'Koperasi' ? 'selected' : '' }}>
+                                {{ __('Koperasi') }}
+                            </option>
+                            <option value="IT Cyber"
+                                {{ $employee->relationDetailed->divisi == 'IT Cyber' ? 'selected' : '' }}>
+                                {{ __('IT Cyber') }}
+                            </option>
+                            <option value="Freelance"
+                                {{ $employee->relationDetailed->divisi == 'Freelance' ? 'selected' : '' }}>
+                                {{ __('Freelance') }}
+                            </option>
                             <optgroup label="Food"></optgroup>
-                            <option value="Soto">{{ __('Soto') }}</option>
-                            <option value="Steak">{{ __('Steak') }}</option>
+                            <option value="Soto" {{ $employee->relationDetailed->divisi == 'Soto' ? 'selected' : '' }}>
+                                {{ __('Soto') }}
+                            </option>
+                            <option value="Steak"
+                                {{ $employee->relationDetailed->divisi == 'Steak' ? 'selected' : '' }}>
+                                {{ __('Steak') }}
+                            </option>
                             <optgroup label="Aplikator"></optgroup>
-                            <option value="Konstruksi">{{ __('Konstruksi') }}</option>
-                            <option value="Produksi">{{ __('Produksi') }}</option>
+                            <option value="Konstruksi"
+                                {{ $employee->relationDetailed->divisi == 'Konstruksi' ? 'selected' : '' }}>
+                                {{ __('Konstruksi') }}
+                            </option>
+                            <option value="Produksi"
+                                {{ $employee->relationDetailed->divisi == 'Produksi' ? 'selected' : '' }}>
+                                {{ __('Produksi') }}
+                            </option>
                             <optgroup label="Almaas"></optgroup>
-                            <option value="Dakwah">{{ __('Dakwah') }}</option>
-                            <option value="Sosial">{{ __('Sosial') }}</option>
-                            <option value="Usaha">{{ __('Usaha') }}</option>
+                            <option value="Dakwah"
+                                {{ $employee->relationDetailed->divisi == 'Dakwah' ? 'selected' : '' }}>
+                                {{ __('Dakwah') }}
+                            </option>
+                            <option value="Sosial"
+                                {{ $employee->relationDetailed->divisi == 'Sosial' ? 'selected' : '' }}>
+                                {{ __('Sosial') }}
+                            </option>
+                            <option value="Usaha"
+                                {{ $employee->relationDetailed->divisi == 'Usaha' ? 'selected' : '' }}>
+                                {{ __('Usaha') }}
+                            </option>
                             <optgroup label="Express"></optgroup>
-                            <option value="Internal">{{ __('Internal') }}</option>
-                            <option value="Eksternal">{{ __('Eksternal') }}</option>
+                            <option value="Internal"
+                                {{ $employee->relationDetailed->divisi == 'Internal' ? 'selected' : '' }}>
+                                {{ __('Internal') }}
+                            </option>
+                            <option value="Eksternal"
+                                {{ $employee->relationDetailed->divisi == 'Eksternal' ? 'selected' : '' }}>
+                                {{ __('Eksternal') }}
+                            </option>
                         </select>
                         @error('divisi')
                         <span class="text-danger" role="alert">
@@ -84,7 +129,7 @@
                                 </div>
                             </div>
                             <input type="text" class="form-control datepicker @error('masuk') is-invalid @enderror"
-                                name="masuk" required>
+                                name="masuk" value="{{ $employee->relationContract->tgl_masuk }}" required>
                             @error('masuk')
                             <span class="text-danger" role="alert">
                                 {{ $message }}
@@ -100,8 +145,8 @@
                                     {{ __('Rp.') }}
                                 </div>
                             </div>
-                            <input class="form-control currency @error('gaji') is-invalid @enderror" type="text"
-                                name="gaji" required>
+                            <input class="form-control currency @error('gaji') is-invalid @enderror"
+                                value="{{ $employee->relationContract->gaji }}" type="text" name="gaji" required>
                         </div>
                         @error('gaji')
                         <span class="text-danger" role="alert">
@@ -117,7 +162,7 @@
                     <div class="form-group">
                         <label>{{ __('No Jaminan') }}</label>
                         <input type="text" class="form-control text-uppercase @error('no_jmn') is-invalid @enderror"
-                            name="no_jmn">
+                            value="{{ $employee->relationContract->no_jaminan }}" name="no_jmn">
                         @error('no_jmn')
                         <span class="text-danger" role="alert">
                             {{ $message }}
@@ -126,7 +171,8 @@
                     </div>
                     <div class="form-group">
                         <label>{{ __('Alamat') }}<code>*</code></label>
-                        <input type="text" class="form-control @error('alm') is-invalid @enderror" name="alm" required>
+                        <input type="text" class="form-control @error('alm') is-invalid @enderror"
+                            value="{{ $employee->relationDetailed->alamat }}" name="alm" required>
                         @error('alm')
                         <span class="text-danger" role="alert">
                             {{ $message }}
@@ -136,7 +182,7 @@
                     <div class="form-group">
                         <label>{{ __('Tempat Lahir') }}<code>*</code></label>
                         <input type="text" class="form-control @error('tmp_lahir') is-invalid @enderror"
-                            name="tmp_lahir" required>
+                            name="tmp_lahir" value="{{ $employee->relationDetailed->tmp_lahir }}" required>
                         @error('tmp_lahir')
                         <span class="text-danger" role="alert">
                             {{ $message }}
@@ -146,7 +192,7 @@
                     <div class="form-group">
                         <label>{{ __('No HP') }}<code>*</code></label>
                         <input type="text" class="form-control tlp @error('tlp') is-invalid @enderror" name="tlp"
-                            required>
+                            value="{{ $employee->relationDetailed->tlp }}" required>
                         @error('tlp')
                         <span class="text-danger" role="alert">
                             {{ $message }}
@@ -158,7 +204,7 @@
                     <div class="form-group">
                         <label>{{ __('Nama Lengkap') }}<code>*</code></label>
                         <input type="text" class="form-control @error('name') is-invalid @enderror" name="name"
-                            required>
+                            value="{{ $employee->nama }}" required>
                         @error('name')
                         <span class="text-danger" role="alert">
                             {{ $message }}
@@ -167,9 +213,13 @@
                     </div>
                     <div class="form-group">
                         <label>{{ __('Jenis Kelamin') }}<code>*</code></label>
-                        <select class="custom-select @error('jk') is-invalid @enderror" name="jk" required>
-                            <option value="Laki-Laki" selected>{{ __('Laki-Laki') }}</option>
-                            <option value="Perempuan">{{ __('Perempuan') }}</option>
+                        <select class="custom-select selectric @error('jk') is-invalid @enderror" name="jk" required>
+                            <option value="Laki-Laki" {{ $employee->jk == 'Laki-Laki' ? 'selected' : '' }}>
+                                {{ __('Laki-Laki') }}
+                            </option>
+                            <option value="Perempuan" {{ $employee->jk == 'Perempuan' ? 'selected' : '' }}>
+                                {{ __('Perempuan') }}
+                            </option>
                         </select>
                         @error('jk')
                         <span class="text-danger" role="alert">
@@ -179,7 +229,8 @@
                     </div>
                     <div class="form-group">
                         <label>{{ __('Jabatan') }}<code>*</code></label>
-                        <select class="custom-select @error('jabatan') is-invalid @enderror" name="jabatan" required>
+                        <select class="custom-select selectric @error('jabatan') is-invalid @enderror" name="jabatan"
+                            required>
                             @foreach ($position as $p)
                             <option value="{{ $p->id }}">
                                 {{ $p->name }}
@@ -201,7 +252,7 @@
                                 </div>
                             </div>
                             <input type="text" class="form-control datepicker @error('kontrak') is-invalid @enderror"
-                                name="kontrak" required>
+                                name="kontrak" value="{{ $employee->relationContract->akhir_kontrak }}" required>
                             @error('kontrak')
                             <span class="text-danger" role="alert">
                                 {{ $message }}
@@ -212,7 +263,7 @@
                     <div class="form-group">
                         <label>{{ __('No Rekening') }}</label>
                         <input type="text" class="form-control text-uppercase @error('rek') is-invalid @enderror"
-                            name="rek">
+                            value="{{ $employee->rek }}" name="rek">
                         @error('rek')
                         <span class="text-danger" role="alert">
                             {{ $message }}
@@ -222,7 +273,7 @@
                     <div class="form-group">
                         <label>{{ __('Jenis Jaminan') }}</label>
                         <input type="text" class="form-control text-uppercase @error('jmn') is-invalid @enderror"
-                            name="jmn">
+                            value="{{ $employee->relationContract->jenis_jaminan }}" name="jmn">
                         @error('jmn')
                         <span class="text-danger" role="alert">
                             {{ $message }}
@@ -232,7 +283,7 @@
                     <div class="form-group">
                         <label>{{ __('Kota') }}<code>*</code></label>
                         <input type="text" class="form-control @error('kota') is-invalid @enderror" name="kota"
-                            required>
+                            value="{{ $employee->relationDetailed->kota }}" required>
                         @error('kota')
                         <span class="text-danger" role="alert">
                             {{ $message }}
@@ -248,7 +299,7 @@
                                 </div>
                             </div>
                             <input type="text" class="form-control datepicker @error('tgl_lahir') is-invalid @enderror"
-                                name="tgl_lahir" required>
+                                value="{{ $employee->relationDetailed->tgl_lahir }}" name="tgl_lahir" required>
                             @error('tgl_lahir')
                             <span class="text-danger" role="alert">
                                 {{ $message }}
@@ -258,12 +309,23 @@
                     </div>
                     <div class="form-group">
                         <label>{{ __('Status') }}<code>*</code></label>
-                        <select class="custom-select @error('status') is-invalid @enderror" name="status" required>
-                            <option value="Aktif" selected>{{ __('Aktif') }}</option>
-                            <option value="Pasif">{{ __('Pasif') }}</option>
-                            <option value="Pelamar">{{ __('Pelamar') }}</option>
-                            <option value="Pending">{{ __('Pending') }}</option>
-                            <option value="Cancel">{{ __('Cancel') }}</option>
+                        <select class="custom-select selectric @error('status') is-invalid @enderror" name="status"
+                            required>
+                            <option value="Aktif" {{ $employee->status == 'Aktif' ? 'selected' : '' }}>
+                                {{ __('Aktif') }}
+                            </option>
+                            <option value="Pasif" {{ $employee->status == 'Pasif' ? 'selected' : '' }}>
+                                {{ __('Pasif') }}
+                            </option>
+                            <option value="Pelamar" {{ $employee->status == 'Pelamar' ? 'selected' : '' }}>
+                                {{ __('Pelamar') }}
+                            </option>
+                            <option value="Pending" {{ $employee->status == 'Pending' ? 'selected' : '' }}>
+                                {{ __('Pending') }}
+                            </option>
+                            <option value="Cancel" {{ $employee->status == 'Cancel' ? 'selected' : '' }}>
+                                {{ __('Cancel') }}
+                            </option>
                         </select>
                         @error('status')
                         <span class="text-danger" role="alert">
@@ -289,7 +351,9 @@
             <div class="form-group">
                 <label>{{ __('Keterangan') }}</label>
                 <textarea type="text" class="form-control @error('ket') is-invalid @enderror" name="ket"
-                    style="height: 100px !important"></textarea>
+                    style="height: 100px !important">
+                    {{ $employee->keterangan }}
+                </textarea>
                 @error('ket')
                 <span class="text-danger" role="alert">
                     {{ $message }}
