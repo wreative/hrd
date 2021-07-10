@@ -1,7 +1,7 @@
 @extends('layouts.default')
-@section('title', __('pages.title').__(' | Tambah Pengguna'))
+@section('title', __('HRD Batubeling | Tambah Pengguna'))
 @section('titleContent', __('Tambah Pengguna'))
-@section('breadcrumb', __('Master'))
+@section('breadcrumb', __('Data'))
 @section('morebreadcrumb')
 <div class="breadcrumb-item active">{{ __('Pengguna') }}</div>
 <div class="breadcrumb-item active">{{ __('Tambah Pengguna') }}</div>
@@ -9,7 +9,7 @@
 
 @section('content')
 <div class="card">
-    <form method="POST" action="{{ route('users.store') }}">
+    <form method="POST" action="{{ route('user.store') }}">
         @csrf
         <div class="card-body">
             <div class="form-group">
@@ -53,12 +53,16 @@
             </div>
             <div class="form-group">
                 <label>{{ __('Roles') }}<code>*</code></label>
-                <select class="form-control select2 @error('roles') is-invalid @enderror" name="roles" required>
-                    @foreach ($roles as $r)
-                    <option value="{{ $r->id }}">
-                        {{ $r->name }}
+                <select class="form-control selectric @error('roles') is-invalid @enderror" name="roles" required>
+                    <option value="Administrator">
+                        {{ __('Administrator') }}
                     </option>
-                    @endforeach
+                    <option value="Manager">
+                        {{ __('Manager') }}
+                    </option>
+                    <option value="User">
+                        {{ __('User') }}
+                    </option>
                 </select>
                 @error('roles')
                 <span class="text-danger" role="alert">
@@ -67,7 +71,7 @@
                 @enderror
             </div>
             <div class="card-footer text-right">
-                <button class="btn btn-primary mr-1" type="submit">{{ __('pages.add') }}</button>
+                <button class="btn btn-primary mr-1" type="submit">{{ __('Tambah Pengguna') }}</button>
             </div>
         </div>
     </form>

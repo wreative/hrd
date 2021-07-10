@@ -2,10 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Divisions;
+use App\Models\Roles;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\History;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Validator;
+
 
 class UserController extends Controller
 {
@@ -24,55 +30,53 @@ class UserController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
+
     public function index()
     {
-        $user = User::all();
-        return view('pages.master.user.user', compact('user'));
+        $user = User::where('id', '!=', Auth::user()->id)
+            ->get();
+        return view('pages.data.users.indexUsers', [
+            'user' => $user
+        ]);
     }
 
     public function create()
     {
-        return view('pages.master.user.createUser');
+        return view('pages.data.users.createUsers');
     }
 
     public function store(Request $req)
     {
-        $this->validate($req, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8'],
-            'previleges' => ['required']
-        ]);
+        Validator::make($req->all(), [
+            'name' => 'required|string|max:255',
+            'username' => 'required|string|max:255|unique:users',
+            'password' => 'required|string|min:8|confirmed',
+            'roles' => 'required'
+        ])->validate();
 
+        // Stored Data
         User::create([
             'name' => $req->name,
-            'email' => $req->email,
+            'username' => $req->username,
             'password' => Hash::make($req->password),
-            'previleges' => $req->previleges,
+            'created_at' => date("Y-m-d H:i:s"),
+            'updated_at' => date("Y-m-d H:i:s"),
+            'previleges' => $req->roles
         ]);
-        return redirect()->route('masterUser');
+
+        return Redirect::route('user.index');
     }
 
-    public function delete($id)
+    public function destroy($id)
     {
         $user = User::find($id);
         $user->delete();
-        return redirect()->route('masterUser');
-    }
 
-    public function changeName(Request $req)
-    {
-        $this->validate($req, [
-            'name' => ['required', 'string', 'max:255']
-        ]);
-        $user = User::find(Auth::user()->id);
-        $user->name = $req->name;
-        $user->save();
-        return redirect()->route('home');
+        return Redirect::route('user.index');
     }
 
     public function changePassword()
     {
-        return view('pages.master.user.changePassword');
+        return view('auth.passwords.reset');
     }
 }

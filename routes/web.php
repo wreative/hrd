@@ -39,12 +39,8 @@ Route::get('/employees-report', [App\Http\Controllers\ReportController::class, '
 
 Route::group(['middleware' => 'roles'], function () {
     // Users
-    Route::get('/user', [App\Http\Controllers\UserController::class, 'index'])
-        ->name('masterUser');
-    Route::get('/user/create', [App\Http\Controllers\UserController::class, 'create'])
-        ->name('createUser');
-    Route::post('/user/store', [App\Http\Controllers\UserController::class, 'store'])
-        ->name('storeUser');
+    Route::resource('user', App\Http\Controllers\UserController::class)
+        ->except(['show', 'edit', 'update']);
     Route::get('/user/delete/{id}', [App\Http\Controllers\UserController::class, 'delete']);
     // Karyawan
     Route::get('/employees/delete/{id}', [App\Http\Controllers\EmployeesController::class, 'delete']);

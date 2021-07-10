@@ -56,12 +56,12 @@
                 </ul>
             </li>
             @if (Auth::user()->previleges == "Administrator")
-            <li class="{{ Request::route()->getName() == 'masterUser' ? 'active' : '' }}">
-                <a class="nav-link" href="{{ route('masterUser') }}"><i class="fas fa-user"></i>
+            <li class="{{ Request::route()->getName() == 'user.index' ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('user.index') }}"><i class="fas fa-user"></i>
                     <span>{{ __('User') }}</span></a>
             </li>
             @endif
-            <li class="menu-header">{{ __('Laporan') }}</li>
+            {{-- <li class="menu-header">{{ __('Laporan') }}</li>
             <li class="{{ Request::route()->getName() == 'employeesReport' ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('employeesReport') }}"><i class="fas fa-file-alt"></i>
                     <span>{{ __('Karyawan') }}</span></a>
@@ -71,7 +71,7 @@
                 <a class="nav-link" href="{{ route('employeesReport') }}"><i class="fas fa-file-invoice-dollar"></i>
                     <span>{{ __('Gaji') }}</span></a>
             </li>
-            @endif
+            @endif --}}
         </ul>
     </aside>
 </div>
