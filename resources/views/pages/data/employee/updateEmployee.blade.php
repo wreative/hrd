@@ -362,7 +362,7 @@
             </div>
         </div>
         <div class="card-footer text-right">
-            <button class="btn btn-primary mr-1" type="submit">{{ __('Tambah') }}</button>
+            <button class="btn btn-primary mr-1" type="submit">{{ __('Ubah Data') }}</button>
         </div>
     </form>
 </div>

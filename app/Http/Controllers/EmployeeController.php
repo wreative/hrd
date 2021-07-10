@@ -219,7 +219,8 @@ class EmployeeController extends Controller
         $employee = Employee::with('relationContract', 'relationDetailed')
             ->find($id);
         return view('pages.data.employee.showEmployee', [
-            'employee' => $employee
+            'employee' => $employee,
+            'position' => Position::all()
         ]);
     }
 
