@@ -29,7 +29,7 @@ class ForgotPasswordController extends Controller
         $this->validate($req, [
             'oldPassword' => ['required', 'string', 'min:8'],
             'password' => ['required', 'string', 'min:8'],
-            'email' => ['required', 'string', 'email'],
+            'username' => ['required', 'string'],
         ]);
 
         if (Auth::user()->email != $req->email) {

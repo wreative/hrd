@@ -23,7 +23,7 @@
             @endif
             <div class="form-group">
                 <label>{{ __('Username') }}</label>
-                <input id="username" type="username" class="form-control @error('username') is-invalid @enderror"
+                <input id="username" type="text" class="form-control @error('username') is-invalid @enderror"
                     value="{{ old('username') }}" name="username" required autocomplete="username" autofocus>
                 @error('username')
                 <span class="text-danger" role="alert">
