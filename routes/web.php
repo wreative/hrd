@@ -26,7 +26,7 @@ Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])-
 Route::resource('employee', App\Http\Controllers\EmployeeController::class);
 
 // Special Action User
-Route::post('/user/name', [App\Http\Controllers\UserController::class, 'changeName'])
+Route::get('/user/name', [App\Http\Controllers\UserController::class, 'changeName'])
     ->name('changeName');
 Route::get('/change-password', [App\Http\Controllers\UserController::class, 'changePassword'])
     ->name('changePassword');

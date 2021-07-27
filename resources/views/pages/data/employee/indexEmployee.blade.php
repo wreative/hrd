@@ -13,7 +13,7 @@
             <i class="far fa-edit"></i>{{ __(' Tambah Karyawan') }}</a>
     </div>
     <div class="card-body">
-        <table class="table-striped table" id="tables" width="100%">
+        <table class="table-striped table" id="table" width="100%">
             <thead>
                 <tr>
                     <th class="text-center">

@@ -2,11 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Divisions;
-use App\Models\Roles;
 use Illuminate\Http\Request;
 use App\Models\User;
-use App\Models\History;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
@@ -77,5 +74,19 @@ class UserController extends Controller
     public function changePassword()
     {
         return view('auth.passwords.reset');
+    }
+
+    public function changeName(Request $req)
+    {
+        $this->validate($req, [
+            'name' => ['required', 'string', 'max:255']
+        ]);
+
+        User::where('id', Auth::user()->id)
+            ->update([
+                'name' => $req->name,
+            ]);
+
+        return Redirect::route('home');
     }
 }

@@ -16,10 +16,3 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.68/vfs_fonts.min.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script src="{{ asset('pages/default.js') }}"></script>
-{{-- <script>
-    $("#name").fireModal({body: 
-        '<form method="POST" action="{{ route('changeName') }}" class="needs-validation">
-@csrf
-<input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" required autofocus>
-</form>', center: true,title: 'Ganti Nama',});
-</script> --}}
