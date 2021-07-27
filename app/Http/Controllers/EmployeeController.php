@@ -7,10 +7,13 @@ use App\Models\Detailed;
 use Illuminate\Http\Request;
 use App\Models\Employee;
 use App\Models\Position;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
+use Yajra\DataTables\DataTables;
 
 class EmployeeController extends Controller
 {
@@ -29,13 +32,57 @@ class EmployeeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index(Request $req)
     {
-        $employee = Employee::with('relationContract', 'relationDetailed')
-            ->get();
-        return view('pages.data.employee.indexEmployee', [
-            'employee' => $employee
-        ]);
+        if ($req->ajax()) {
+            $data = DB::table('employee')
+                ->select(
+                    'employee.id AS id',
+                    'employee.kode AS code',
+                    'employee.nama AS name',
+                    'detailed.divisi AS division',
+                    'detailed.jabatan AS position',
+                    'detailed.lama_bulan AS long_month',
+                    'contract.gaji AS salary',
+                    'employee.status'
+                )
+                ->join('contract', 'employee.kontrak', '=', 'contract.id')
+                ->join('detailed', 'employee.detail', '=', 'detailed.id')
+                ->get();
+            // $period = Reports::where('tgl', '>=', $this->getPeriod($req->filter_period));
+            // return Datatables::of($req->filter_period ? $period : $data)
+            return Datatables::of($data)
+                ->addIndexColumn()
+                ->addColumn('long_month', function ($row) {
+                    return $row->long_month . __(' Bulan');
+                })
+                ->addColumn('salary', function ($row) {
+                    return __('Rp.') . number_format($row->salary);
+                })
+                ->addColumn('status', function ($row) {
+                    $status = '<span class="badge badge-info">' . $row->status . '</span>';
+                    return $status;
+                })
+                ->addColumn('action', function ($row) {
+                    $actionBtn = '<div class="btn-group">';
+                    $actionBtn .= '<a href="' . route('employee.show', $row->id) . '" class="btn btn-primary">Lihat</a>';
+                    $actionBtn .= '<button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split"
+                            data-toggle="dropdown">
+                            <span class="sr-only">Toggle Dropdown</span>
+                        </button>';
+                    $actionBtn .= '<div class="dropdown-menu">
+                            <a class="dropdown-item" href="' . route('employee.edit', $row->id) . '">Edit</a>';
+                    if (Auth::user()->previleges == "Administrator") {
+                        $actionBtn .= '<a onclick="del(' . $row->id . ')" class="dropdown-item" style="cursor:pointer;">Hapus</a>';
+                    }
+                    $actionBtn .= '</div></div>';
+                    return $actionBtn;
+                })
+                ->rawColumns(['action', 'status', 'long_month', 'salary'])
+                ->make(true);
+        }
+
+        return view('pages.data.employee.indexEmployee');
     }
 
     public function create()
@@ -129,7 +176,7 @@ class EmployeeController extends Controller
             Storage::disk('public')->delete($employee->photo);
         }
         $employee->delete();
-        return Redirect::route('employee.index');
+        return Response::json(['status' => 'success']);
     }
 
     public function edit($id)

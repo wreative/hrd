@@ -40,6 +40,7 @@ mix.scripts(
         "resources/js/buttons.flash.min.js",
         "resources/js/buttons.html5.min.js",
         "resources/js/buttons.print.min.js",
+        "resources/js/buttons.colVis.min.js",
         "resources/js/dataTables.responsive.min.js",
         "resources/js/responsive.bootstrap4.min.js",
         "resources/js/Chart.min.js",

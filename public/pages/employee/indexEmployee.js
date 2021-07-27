@@ -10,7 +10,7 @@ var table = $("#table").DataTable({
         [10, 25, 50, "Semua"]
     ],
     ajax: {
-        url: "/reports",
+        url: "/employee",
         type: "GET",
         data: function(d) {
             d.filter_period = $("#filter_period").val();
@@ -19,10 +19,13 @@ var table = $("#table").DataTable({
     dom: '<"html5buttons">lBrtip',
     columns: [
         { data: "DT_RowIndex", orderable: false, searchable: false },
+        { data: "code" },
         { data: "name" },
-        { data: "tgl" },
+        { data: "division" },
+        { data: "position" },
+        { data: "long_month" },
+        { data: "salary" },
         { data: "status" },
-        { data: "category" },
         { data: "action", orderable: false, searchable: true }
     ],
     buttons: [
@@ -81,3 +84,33 @@ $(".filter_status").on("change", function() {
 $("#filter_period").on("change", function() {
     table.draw();
 });
+
+function del(id) {
+    swal({
+        title: "Apakah Anda Yakin?",
+        text: "Aksi ini tidak dapat dikembalikan. Apakah ingin melanjutkan?",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true
+    }).then(willDelete => {
+        if (willDelete) {
+            $.ajaxSetup({
+                headers: {
+                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
+                }
+            });
+            $.ajax({
+                url: "/employee/" + id,
+                type: "DELETE",
+                success: function() {
+                    swal("Data karyawan berhasil dihapus", {
+                        icon: "success"
+                    });
+                    table.draw();
+                }
+            });
+        } else {
+            swal("Data karyawan Anda tidak jadi dihapus!");
+        }
+    });
+}
