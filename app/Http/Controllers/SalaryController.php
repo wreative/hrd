@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Employees;
+use App\Models\Employee;
 use App\Models\Salary;
 use App\Models\SalaryPlus;
 use App\Models\SalaryMinus;
@@ -31,10 +31,10 @@ class SalaryController extends Controller
         // $salary = Salary::with('relationSalaryMinus', 'relationSalaryPlus', 'relationEmployees')->get();
         $salary = DB::table('salary')
             ->join('salary_plus', 'salary.plus_id', '=', 'salary_plus.id_plus')
-            ->join('employees', 'salary.e_id', '=', 'employees.id')
+            ->join('employee', 'salary.e_id', '=', 'employee.id')
             ->select(
-                'employees.kode',
-                'employees.nama',
+                'employee.kode',
+                'employee.nama',
                 'salary.tanggal',
                 'salary.gaji',
                 'salary_plus.lylts',
@@ -44,17 +44,17 @@ class SalaryController extends Controller
                 'salary.total'
             )
             ->get();
-        return view('pages.master.gaji.gaji', ['salary' => $salary]);
+        return view('pages.data.salary.indexLoyalty', ['salary' => $salary]);
     }
 
     public function create()
     {
-        $karyawan = DB::table('employees')
-            ->join('detailed', 'employees.id', '=', 'detailed.id')
+        $karyawan = DB::table('employee')
+            ->join('detailed', 'employee.id', '=', 'detailed.id')
             // ->select('employees.id', 'divisi', 'jabatan', 'nama', 'loyalitas', 'dedikasi')
-            ->select('employees.id', 'divisi', 'jabatan', 'nama')
+            ->select('employee.id', 'divisi', 'jabatan', 'nama')
             ->get();
-        return view('pages.master.gaji.createGaji', ['karyawan' => $karyawan]);
+        return view('pages.data.salary.createSalary', ['karyawan' => $karyawan]);
     }
 
     public function store(Request $req)
@@ -88,12 +88,18 @@ class SalaryController extends Controller
         ]);
         // Get Name Employees
         // $karyawan = DB::table('employees')->find($req->karyawan);
-        $karyawan = Employees::with('relationContract')->find($req->karyawan);
+        $karyawan = Employee::with('relationContract')
+            ->find($req->karyawan);
         // $hari = date('t', strtotime($req->tgl));
 
         // Check Loyalty And Dedication        
         if ($karyawan->loyalitas || $karyawan->dedikasi == null) {
-            view('pages.master.gaji.createGaji', ['status' => 'Karyawan & Dedikasi Tidak Boleh Kosong, Tambah Terlebih Dahulu!']);
+            view(
+                'pages.data.gaji.createGaji',
+                [
+                    'status' => 'Karyawan & Dedikasi Tidak Boleh Kosong, Tambah Terlebih Dahulu!'
+                ]
+            );
         }
 
         // Const
@@ -188,7 +194,7 @@ class SalaryController extends Controller
 
     public function temp()
     {
-        return view('pages.master.gaji.checkGaji');
+        return view('pages.data.salary.checkSalary');
     }
 
     public function check(Request $req)
@@ -199,10 +205,10 @@ class SalaryController extends Controller
         //     ->where('employees.id', '=', $req->id)
         //     ->get();
         $karyawan = DB::table('ld')
-            ->select('ld.tgl', 'ld.loyalitas', 'ld.dedikasi', 'employees.nama', 'contract.gaji')
-            ->join('employees', 'ld.e_id', '=', 'employees.id')
-            ->join('contract', 'employees.kontrak', '=', 'contract.id')
-            ->where('employees.id', '=', $req->id)
+            ->select('ld.tgl', 'ld.loyalitas', 'ld.dedikasi', 'employee.nama', 'contract.gaji')
+            ->join('employee', 'ld.e_id', '=', 'employee.id')
+            ->join('contract', 'employee.kontrak', '=', 'contract.id')
+            ->where('employee.id', '=', $req->id)
             ->orderBy('ld.tgl', 'desc')
             ->limit(1)
             ->get();
@@ -279,7 +285,11 @@ class SalaryController extends Controller
             'ak' => $req->ak,
         ]);
 
-        $count = DB::table('salary_plus')->select('id_plus')->orderByDesc('id_plus')->limit('1')->first();
+        $count = DB::table('salary_plus')
+            ->select('id_plus')
+            ->orderByDesc('id_plus')
+            ->limit('1')
+            ->first();
 
         Salary::create([
             'tanggal' => $req->tgl,

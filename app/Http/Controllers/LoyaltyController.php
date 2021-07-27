@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Employees;
+use App\Models\Employee;
 use App\Models\LoyaltyDedication;
 use App\Models\Loyalty;
 use App\Models\Dedication;
@@ -29,13 +29,16 @@ class LoyaltyController extends Controller
 
     public function index()
     {
-        $karyawan = LoyaltyDedication::with('relationEmployees', 'relationLoyalty', 'relationDedication')->get();
-        return view('pages.master.gaji.loyalty', ['karyawan' => $karyawan]);
+        $karyawan = LoyaltyDedication::with('relationEmployees', 'relationLoyalty', 'relationDedication')
+            ->get();
+        return view('pages.data.salary.indexLoyalty', [
+            'karyawan' => $karyawan
+        ]);
     }
 
     public function create()
     {
-        $karyawan = Employees::with('relationDetailed')->get();
+        $karyawan = Employee::with('relationDetailed')->get();
         return view('pages.master.gaji.createLoyalty', ['karyawan' => $karyawan]);
     }
 
@@ -60,7 +63,7 @@ class LoyaltyController extends Controller
         $date = date("d-m-Y", strtotime($req->tgl));
 
         $rank = $req->rank == '1' ? 200000 : ($req->rank == '2' ? 100000 : 0);
-        $karyawan = Employees::find($req->karyawan);
+        $karyawan = Employee::find($req->karyawan);
 
         // Total
         $loyaltyTotal = $req->absen + $req->waktu + $req->uniform + $req->sop + $req->tj + $req->kt;
@@ -86,7 +89,12 @@ class LoyaltyController extends Controller
             'total' => $dedicationTotal,
         ]);
 
-        $count = DB::table('loyalty')->select('id')->orderByDesc('id')->limit('1')->first()->id;
+        $count = DB::table('loyalty')
+            ->select('id')
+            ->orderByDesc('id')
+            ->limit('1')
+            ->first()
+            ->id;
 
         LoyaltyDedication::create([
             'tgl' => $req->tgl,
