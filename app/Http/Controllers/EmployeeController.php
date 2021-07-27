@@ -49,15 +49,17 @@ class EmployeeController extends Controller
                 ->join('contract', 'employee.kontrak', '=', 'contract.id')
                 ->join('detailed', 'employee.detail', '=', 'detailed.id')
                 ->get();
-            // $period = Reports::where('tgl', '>=', $this->getPeriod($req->filter_period));
-            // return Datatables::of($req->filter_period ? $period : $data)
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('long_month', function ($row) {
                     return $row->long_month . __(' Bulan');
                 })
                 ->addColumn('salary', function ($row) {
-                    return __('Rp.') . number_format($row->salary);
+                    if (Auth::user()->previleges == "Administrator") {
+                        return __('Rp.') . number_format($row->salary);
+                    } else {
+                        return __('Hidden');
+                    }
                 })
                 ->addColumn('status', function ($row) {
                     $status = '<span class="badge badge-info">' . $row->status . '</span>';
@@ -291,30 +293,5 @@ class EmployeeController extends Controller
             ->orderByDesc('id')
             ->limit('1')
             ->first()->id;
-    }
-
-    function dataDivision()
-    {
-        return $divison = [
-            'Semua' => [
-                "Accounting", "Admin", "Supplier", "Koperasi", "IT Cyber", "Freelance",
-            ],
-            'Food' => [
-                "Soto", "Steak"
-            ],
-            'Aplikator' => ["Konstruksi", "Produksi"],
-            'Almaas' => ["Dakwah", "Sosial", "Usaha"],
-            'Express' => ["Internal", "Eksternal"]
-        ];
-
-        // $divison[] = [
-        //     array(
-        //         "Accounting", "Admin", "Supplier", "Koperasi", "IT Cyber", "Freelance",
-        //         array("Food", "Soto", "Steak"),
-        //         array("Aplikator", "Konstruksi", "Produksi"),
-        //         array("Almaas", "Dakwah", "Sosial", "Usaha"),
-        //         array("Express", "Internal", "Eksternal")
-        //     );
-        // ];
     }
 }

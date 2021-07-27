@@ -25,14 +25,28 @@
             </select>
         </div>
         <div class="form-group">
-            <label>{{ __('Filter Berdasarkan Periode :') }}</label>
-            <select name="filter_period" class="form-control selectric" id="filter_period">
-                <option value="">{{ __('Pilih Periode') }}</option>
-                <option value="7">{{ __('7 Hari Terakhir') }}</option>
-                <option value="14">{{ __('14 Hari Terakhir') }}</option>
-                <option value="21">{{ __('21 Hari Terakhir') }}</option>
-                <option value="31">{{ __('31 Hari Terakhir') }}</option>
-                <option value="365">{{ __('365 Hari Terakhir') }}</option>
+            <label>{{ __('Filter Berdasarkan Divisi :') }}</label>
+            <select data-column="3" name="filter_division" class="form-control selectric" id="filter_division">
+                <option value="">{{ __('Pilih Divisi') }}</option>
+                <option value="Accounting" selected>{{ __('Accounting') }}</option>
+                <option value="Admin">{{ __('Admin') }}</option>
+                <option value="Supplier">{{ __('Supplier') }}</option>
+                <option value="Koperasi">{{ __('Koperasi') }}</option>
+                <option value="IT Cyber">{{ __('IT Cyber') }}</option>
+                <option value="Freelance">{{ __('Freelance') }}</option>
+                <optgroup label="Food"></optgroup>
+                <option value="Soto">{{ __('Soto') }}</option>
+                <option value="Steak">{{ __('Steak') }}</option>
+                <optgroup label="Aplikator"></optgroup>
+                <option value="Konstruksi">{{ __('Konstruksi') }}</option>
+                <option value="Produksi">{{ __('Produksi') }}</option>
+                <optgroup label="Almaas"></optgroup>
+                <option value="Dakwah">{{ __('Dakwah') }}</option>
+                <option value="Sosial">{{ __('Sosial') }}</option>
+                <option value="Usaha">{{ __('Usaha') }}</option>
+                <optgroup label="Express"></optgroup>
+                <option value="Internal">{{ __('Internal') }}</option>
+                <option value="Eksternal">{{ __('Eksternal') }}</option>
             </select>
         </div>
     </div>
@@ -56,58 +70,12 @@
                     <th>{{ __('Divisi') }}</th>
                     <th>{{ __('Jabatan') }}</th>
                     <th>{{ __('Lama Bekerja') }}</th>
-                    @if (Auth::user()->previleges == "Administrator")
                     <th>{{ __('Gaji') }}</th>
-                    @endif
                     <th>{{ __('Status') }}</th>
                     <th>{{ __('Aksi') }}</th>
                 </tr>
             </thead>
             <tbody>
-                {{-- @foreach($employee as $number => $e)
-                <tr>
-                    <td class="text-center">
-                        {{ $number + 1 }}
-                </td>
-                <td class="text-center">
-                    {{ $e->kode }}
-                </td>
-                <td>{{ $e->nama }}</td>
-                <td>{{ $e->relationDetailed->divisi }}</td>
-                <td>{{ $e->relationDetailed->jabatan }}</td>
-                <td>{{ $e->relationDetailed->lama_bulan.__(' Bulan') }}</td>
-                @if (Auth::user()->previleges == "Administrator")
-                <td>{{ __('Rp.').number_format($e->relationContract->gaji) }}</td>
-                @endif
-                <td>
-                    <span class="badge badge-info">{{ $e->status }}</span>
-                </td>
-                <td>
-                    <div class="btn-group">
-                        <a href="{{ route('employee.show',$e->id) }}" class="btn btn-primary">{{ __('Lihat') }}</a>
-                        <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split"
-                            data-toggle="dropdown">
-                            <span class="sr-only">{{ __('Toggle Dropdown') }}</span>
-                        </button>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="{{ route('employee.edit',$e->id) }}">{{ __('Edit') }}</a>
-                            @if (Auth::user()->previleges == "Administrator")
-                            <form id="del-data{{ $e->id }}" action="{{ route('employee.destroy',$e->id) }}"
-                                method="POST" class="d-inline">
-                                @csrf
-                                @method('DELETE')
-                                <a class="dropdown-item" style="cursor: pointer"
-                                    data-confirm="Apakah Anda Yakin?|Aksi ini tidak dapat dikembalikan. Apakah ingin melanjutkan?"
-                                    data-confirm-yes="document.getElementById('del-data{{ $e->id }}').submit();">
-                                    {{ __('Hapus') }}
-                                </a>
-                            </form>
-                            @endif
-                        </div>
-                    </div>
-                </td>
-                </tr>
-                @endforeach --}}
             </tbody>
         </table>
     </div>

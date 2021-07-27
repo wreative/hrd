@@ -20,10 +20,19 @@ class UserSeeder extends Seeder
                 'id' => '1',
                 'name' => 'Admin',
                 'username' => 'admin',
-                'password' => Hash::make(1234567890),
+                'password' => Hash::make('admin'),
                 'created_at' => date("Y-m-d H:i:s"),
                 'updated_at' => date("Y-m-d H:i:s"),
                 'previleges' => 'Administrator'
+            ],
+            [
+                'id' => '2',
+                'name' => 'User',
+                'username' => 'user',
+                'password' => Hash::make('user'),
+                'created_at' => date("Y-m-d H:i:s"),
+                'updated_at' => date("Y-m-d H:i:s"),
+                'previleges' => 'User'
             ]
         ]);
     }

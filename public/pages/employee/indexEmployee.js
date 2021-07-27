@@ -81,8 +81,11 @@ $(".filter_status").on("change", function() {
         .search($(this).val())
         .draw();
 });
-$("#filter_period").on("change", function() {
-    table.draw();
+$("#filter_division").on("change", function() {
+    table
+        .column($(this).data("column"))
+        .search($(this).val())
+        .draw();
 });
 
 function del(id) {
