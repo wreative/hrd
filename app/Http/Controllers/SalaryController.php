@@ -44,7 +44,7 @@ class SalaryController extends Controller
                 'salary.total'
             )
             ->get();
-        return view('pages.data.salary.indexLoyalty', ['salary' => $salary]);
+        return view('pages.data.salary.indexSalary', ['salary' => $salary]);
     }
 
     public function create()

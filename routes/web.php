@@ -25,7 +25,7 @@ Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])-
 // Karyawan
 Route::resource('employee', App\Http\Controllers\EmployeeController::class);
 
-// User
+// Special Action User
 Route::post('/user/name', [App\Http\Controllers\UserController::class, 'changeName'])
     ->name('changeName');
 Route::get('/change-password', [App\Http\Controllers\UserController::class, 'changePassword'])
@@ -37,14 +37,11 @@ Route::post('/reset', [App\Http\Controllers\Auth\ForgotPasswordController::class
 Route::get('/employees-report', [App\Http\Controllers\ReportController::class, 'employeesReport'])
     ->name('employeesReport');
 
-Route::group(['middleware' => 'roles'], function () {
-    // Users
-    Route::resource('user', App\Http\Controllers\UserController::class)
-        ->except(['show', 'edit', 'update']);
-    Route::get('/user/delete/{id}', [App\Http\Controllers\UserController::class, 'delete']);
-    // Karyawan
-    Route::get('/employees/delete/{id}', [App\Http\Controllers\EmployeesController::class, 'delete']);
-});
+// Users
+Route::resource('user', App\Http\Controllers\UserController::class)
+    ->except([
+        'show', 'edit', 'update'
+    ]);
 
 // Gaji
 Route::get('/salary', [App\Http\Controllers\SalaryController::class, 'index'])

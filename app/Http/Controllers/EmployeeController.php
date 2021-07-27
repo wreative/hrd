@@ -7,7 +7,6 @@ use App\Models\Detailed;
 use Illuminate\Http\Request;
 use App\Models\Employee;
 use App\Models\Position;
-use Facade\FlareClient\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
@@ -124,13 +123,11 @@ class EmployeeController extends Controller
     public function destroy($id)
     {
         $employee = Employee::find($id);
-        $contract = Contract::find($employee->kontrak);
-        $detail = Detailed::find($employee->detail);
+        Contract::destroy($employee->kontrak);
+        Detailed::destroy($employee->detail);
         if (Storage::disk('public')->exists($employee->photo)) {
             Storage::disk('public')->delete($employee->photo);
         }
-        $contract->delete();
-        $detail->delete();
         $employee->delete();
         return Redirect::route('employee.index');
     }
@@ -176,41 +173,43 @@ class EmployeeController extends Controller
             $fileName = '';
         }
 
-        $employee = Employee::find($id);
-
         // Stored Employee
-        $employee->nik = $req->nik;
-        $employee->nama = $req->name;
-        $employee->jk = $req->jk;
-        $employee->status = $req->status;
-        $employee->keterangan = $req->ket;
-        $employee->rek = $req->rek;
+        Employee::where('id', $id)
+            ->update([
+                'nik' => $req->nik,
+                'nama' => $req->name,
+                'jk' => $req->jk,
+                'status' => $req->status,
+                'keterangan' => $req->ket,
+                'rek' => $req->rek
+            ]);
 
         // Find ID
-        $detail = Detailed::find($employee->detail);
-        $contract = Contract::find($employee->kontrak);
+        $employee = Employee::find($id);
 
         // Stored Contract
-        $contract->tgl_masuk = $req->masuk;
-        $contract->akhir_kontrak = $req->kontrak;
-        $contract->gaji = str_replace(',', '', $req->gaji);
-        $contract->no_jaminan = $req->no_jmn;
-        $contract->jenis_jaminan = $req->jmn;
+        Contract::where('id', $employee->kontrak)
+            ->update([
+                'tgl_masuk' => $req->masuk,
+                'akhir_kontrak' => $req->kontrak,
+                'gaji' => str_replace(',', '', $req->gaji),
+                'no_jaminan' => $req->no_jmn,
+                'jenis_jaminan' => $req->jmn,
+            ]);
 
         // Stored Detailed
-        $detail->divisi = $req->divisi;
-        $detail->jabatan = $req->jabatan;
-        $detail->alamat = $req->alm;
-        $detail->kota = $req->kota;
-        $detail->tmp_lahir = $req->tmp_lahir;
-        $detail->tgl_lahir = $req->tgl_lahir;
-        $detail->tlp = $req->tlp;
-        $detail->lama_bulan = $req->lb;
+        Detailed::where('id', $employee->detail)
+            ->update([
+                'divisi' => $req->divisi,
+                'jabatan' => $req->jabatan,
+                'alamat' => $req->alm,
+                'kota' => $req->kota,
+                'tmp_lahir' => $req->tmp_lahir,
+                'tgl_lahir' => $req->tgl_lahir,
+                'tlp' => $req->tlp,
+                'lama_bulan' => $req->lb
+            ]);
 
-        // Saved Datas
-        $employee->save();
-        $contract->save();
-        $detail->save();
         return Redirect::route('employee.index');
     }
 

@@ -22,7 +22,7 @@ class UserController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware(['auth', 'roles']);
     }
 
     /**
@@ -69,8 +69,7 @@ class UserController extends Controller
 
     public function destroy($id)
     {
-        $user = User::find($id);
-        $user->delete();
+        User::destroy($id);
 
         return Redirect::route('user.index');
     }
